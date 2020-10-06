@@ -1,0 +1,1 @@
+﻿GRANT SELECT INTO S3 ON *.* TO '{env}_reports' IDENTIFIED BY '{password}';

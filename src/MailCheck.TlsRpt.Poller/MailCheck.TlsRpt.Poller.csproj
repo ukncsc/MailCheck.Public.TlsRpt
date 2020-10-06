@@ -1,0 +1,78 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+    <AWSProjectType>Lambda</AWSProjectType>
+    <ApplicationIcon />
+    <OutputType>Exe</OutputType>
+    <StartupObject>MailCheck.TlsRpt.Poller.LocalEntryPoint</StartupObject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Evaluator\**" />
+    <EmbeddedResource Remove="Evaluator\**" />
+    <None Remove="Evaluator\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Amazon.Lambda.Core" Version="1.1.0" />
+    <PackageReference Include="Amazon.Lambda.Serialization.Json" Version="1.5.0" />
+    <PackageReference Include="MailCheck.Common.Messaging" Version="1.8.0.52" />
+    <PackageReference Include="MailCheck.Common.util" Version="1.8.0.52" />
+    <PackageReference Include="Microsoft.Extensions.CommandLineUtils" Version="1.1.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="Louw.PublicSuffix" Version="1.2.2" />
+    <PackageReference Include="DnsClient" Version="1.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Amazon.Lambda.Tools" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MailCheck.TlsRpt.Contracts\MailCheck.TlsRpt.Contracts.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Domain\Errors\Parser\TlsRptParserErrorMessages.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TlsRptParserErrorMessages.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Domain\Errors\Parser\TlsRptParserMarkDown.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TlsRptParserMarkDown.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Domain\Errors\Rules\TlsRptRuleErrorMessages.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TlsRptRuleErrorMessages.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Domain\Errors\Rules\TlsRptRuleMarkDown.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TlsRptRuleMarkDown.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Domain\Errors\Parser\TlsRptParserErrorMessages.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>TlsRptParserErrorMessages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Domain\Errors\Parser\TlsRptParserMarkDown.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>TlsRptParserMarkDown.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Domain\Errors\Rules\TlsRptRuleErrorMessages.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>TlsRptRuleErrorMessages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Domain\Errors\Rules\TlsRptRuleMarkDown.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>TlsRptRuleMarkDown.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>

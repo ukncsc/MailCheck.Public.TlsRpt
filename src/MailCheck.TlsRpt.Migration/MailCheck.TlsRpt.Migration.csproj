@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Scripts\2019-07-19-1132_create_tls_rpt_scheduled_records_table.sql" />
+    <None Remove="Scripts\2019-07-19-1133_create_tls_rpt_scheduled_records_grants.sql" />
+    <None Remove="Scripts\2019-07-23-1144_create_tls_rpt_entity_history_table.sql" />
+    <None Remove="Scripts\2019-07-23-1146_create_tls_rpt_entity_history_grants.sql" />
+    <None Remove="Scripts\2019-07-24-1224_create_tls_rpt_entity_table.sql" />
+    <None Remove="Scripts\2019-07-24-1226_create_tls_rpt_entity_grants.sql" />
+    <None Remove="Scripts\2020-04-03-1453_dev_report_grants.sql.sql" />
+    <None Remove="Scripts\2020-04-06-1453_dev_report_s3_grants.sql" />
+    <None Remove="Scripts\everytime\grants.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Scripts\2019-07-19-1132_create_tls_rpt_scheduled_records_table.sql" />
+    <EmbeddedResource Include="Scripts\2019-07-19-1133_create_tls_rpt_scheduled_records_grants.sql" />
+    <EmbeddedResource Include="Scripts\2019-07-23-1144_create_tls_rpt_entity_history_table.sql" />
+    <EmbeddedResource Include="Scripts\2019-07-23-1146_create_tls_rpt_entity_history_grants.sql" />
+    <EmbeddedResource Include="Scripts\2019-07-24-1224_create_tls_rpt_entity_table.sql" />
+    <EmbeddedResource Include="Scripts\2019-07-24-1226_create_tls_rpt_entity_grants.sql" />
+    <EmbeddedResource Include="Scripts\2020-04-03-1453_dev_report_grants.sql.sql" />
+    <EmbeddedResource Include="Scripts\2020-04-06-1453_dev_report_s3_grants.sql" />
+    <EmbeddedResource Include="Scripts\everytime\grants.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MailCheck.Common.Data.Migration" Version="4.3.0" />
+  </ItemGroup>
+
+</Project>

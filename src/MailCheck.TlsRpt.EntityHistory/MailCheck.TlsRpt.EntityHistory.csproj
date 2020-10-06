@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+    <AWSProjectType>Lambda</AWSProjectType>
+    <ApplicationIcon />
+    <OutputType>Exe</OutputType>
+    <StartupObject>MailCheck.TlsRpt.EntityHistory.LocalEntryPoint</StartupObject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Amazon.Lambda.Core" Version="1.1.0" />
+    <PackageReference Include="Amazon.Lambda.Serialization.Json" Version="1.5.0" />
+    <PackageReference Include="MailCheck.Common.Contracts" Version="4.0.0" />
+    <PackageReference Include="MailCheck.Common.Data" Version="4.0.0" />
+    <PackageReference Include="MailCheck.Common.Messaging" Version="4.0.0" />
+    <PackageReference Include="MailCheck.Common.Util" Version="4.0.0" />
+    <PackageReference Include="MailCheck.Common.SSM" Version="4.0.0" />
+    <PackageReference Include="Microsoft.Extensions.CommandLineUtils" Version="1.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Amazon.Lambda.Tools" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MailCheck.TlsRpt.Contracts\MailCheck.TlsRpt.Contracts.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Dao\TlsRptEntityHistoryDaoResouces.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TlsRptEntityHistoryDaoResouces.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Dao\TlsRptEntityHistoryDaoResouces.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TlsRptEntityHistoryDaoResouces.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>

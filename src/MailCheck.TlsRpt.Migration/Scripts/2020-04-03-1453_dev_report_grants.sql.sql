@@ -1,0 +1,1 @@
+﻿GRANT SELECT ON `tls_rpt_entity` TO '{env}_reports' IDENTIFIED BY '{password}';

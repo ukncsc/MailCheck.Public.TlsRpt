@@ -1,0 +1,1 @@
+﻿GRANT SELECT, INSERT, UPDATE, DELETE ON `tls_rpt_scheduled_records` TO '{env}-tlsrpt-sch' IDENTIFIED BY '{password}';

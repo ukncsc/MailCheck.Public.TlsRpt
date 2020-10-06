@@ -1,0 +1,84 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+    <AWSProjectType>Lambda</AWSProjectType>
+    <ApplicationIcon />
+    <OutputType>Exe</OutputType>
+    <StartupObject>MailCheck.TlsRpt.Evaluator.LocalEntryPoint</StartupObject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Explainers\AdkimTagExplainer.cs" />
+    <Compile Remove="Explainers\AspfTagExplainer.cs" />
+    <Compile Remove="Explainers\FailureOptionsExplainer.cs" />
+    <Compile Remove="Explainers\PercentExplainer.cs" />
+    <Compile Remove="Explainers\PolicyExplainer.cs" />
+    <Compile Remove="Explainers\ReportFormatExplainer.cs" />
+    <Compile Remove="Explainers\ReportIntervalExplainer.cs" />
+    <Compile Remove="Explainers\ReportUriAggregateExplainer.cs" />
+    <Compile Remove="Explainers\ReportUriForensicExplainer.cs" />
+    <Compile Remove="Explainers\SubDomainPolicyExplainer.cs" />
+    <Compile Remove="Explainers\VersionExplainer.cs" />
+    <Compile Remove="Rules\InvestigateRejectedEmailsOnDomainsWithRejectPolicy.cs" />
+    <Compile Remove="Rules\NudgeAlongFromPolicyOfNone.cs" />
+    <Compile Remove="Rules\PctValueShouldBe100.cs" />
+    <Compile Remove="Rules\PolicyShouldBeQuarantineOrReject.cs" />
+    <Compile Remove="Rules\RufTagShouldNotContainDmarcServiceMailBox.cs" />
+    <Compile Remove="Rules\ShouldHaveSpfRecordWIthPolicyOfQuarantineOrReject.cs" />
+    <Compile Remove="Rules\SubDomainPolicyShouldBeQuarantineOrReject.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Amazon.Lambda.Core" Version="1.1.0" />
+    <PackageReference Include="Amazon.Lambda.Serialization.Json" Version="1.5.0" />
+    <PackageReference Include="Flurl.Http" Version="2.4.1" />
+    <PackageReference Include="MailCheck.Common.Messaging" Version="1.8.0.52" />
+    <PackageReference Include="MailCheck.Common.Api" Version="1.8.0.52" />
+    <PackageReference Include="MailCheck.Common.Util" Version="1.8.0.52" />
+    <PackageReference Include="MailCheck.Common.SSM" Version="1.8.0.52" />
+    <PackageReference Include="Microsoft.Extensions.CommandLineUtils" Version="1.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Amazon.Lambda.Tools" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MailCheck.TlsRpt.Contracts\MailCheck.TlsRpt.Contracts.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Explainers\TlsRptExplainerResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TlsRptExplainerResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Rules\TlsRptRulesMarkDownResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TlsRptRulesMarkDownResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Rules\TlsRptRulesResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TlsRptRulesResource.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Explainers\TlsRptExplainerResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TlsRptExplainerResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Rules\TlsRptRulesMarkDownResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TlsRptRulesMarkDownResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Rules\TlsRptRulesResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TlsRptRulesResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>
