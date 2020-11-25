@@ -72,6 +72,21 @@ namespace MailCheck.TlsRpt.Poller.Test.Dns
         }
 
         [Test]
+        public async Task DoesntReturnErrorForServerFailureResponse()
+        {
+            const string error = "Server Failure";
+
+            IDnsQueryResponse response = CreateError(error);
+
+            A.CallTo(() => _lookupClient.QueryAsync(A<string>._, QueryType.TXT, QueryClass.IN, CancellationToken.None)).Returns(response);
+
+            TlsRptRecordInfos tlsRptRecordInfos = await _dnsClient.GetTlsRptRecords(string.Empty);
+
+            Assert.That(tlsRptRecordInfos.RecordsInfos.Count, Is.EqualTo(0));
+            Assert.That(tlsRptRecordInfos.Error, Is.Null);
+        }
+
+        [Test]
         public void ExceptionsArePropagated()
         {
             A.CallTo(() => _lookupClient.QueryAsync(A<string>._, QueryType.TXT, QueryClass.IN, CancellationToken.None))

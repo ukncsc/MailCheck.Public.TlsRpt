@@ -19,7 +19,7 @@ namespace MailCheck.TlsRpt.Poller.Dns
     public class DnsClient : IDnsClient
     {
         private const string NonExistentDomainError = "Non-Existent Domain";
-
+        private const string SERV_FAILURE_ERROR = "Server Failure";
         private readonly ILookupClient _lookupClient;
         private readonly ILogger<DnsClient> _log;
 
@@ -42,7 +42,7 @@ namespace MailCheck.TlsRpt.Poller.Dns
                 .Select(_ => new TlsRptRecordInfo(domain, _.Text.Select(r => r.Escape()).ToList()))
                 .ToList();
 
-            if (response.HasError && response.ErrorMessage != NonExistentDomainError)
+            if (response.HasError && response.ErrorMessage != NonExistentDomainError && response.ErrorMessage != SERV_FAILURE_ERROR)
             {
                 return new TlsRptRecordInfos(domain, new FailedPollError(response.ErrorMessage) , response.MessageSize);
             }
