@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using MailCheck.Common.Data.Abstractions;
+using Dapper;
+using MailCheck.Common.Data;
 using MailCheck.TlsRpt.Scheduler.Dao.Model;
-using MySql.Data.MySqlClient;
-using MySqlHelper = MailCheck.Common.Data.Util.MySqlHelper;
 
 namespace MailCheck.TlsRpt.Scheduler.Dao
 {
@@ -11,48 +10,54 @@ namespace MailCheck.TlsRpt.Scheduler.Dao
     {
         Task<TlsRptSchedulerState> Get(string domain);
         Task Save(TlsRptSchedulerState state);
-        Task Delete(string domain);
+        Task<int> Delete(string domain);
     }
 
     public class TlsRptSchedulerDao : ITlsRptSchedulerDao
     {
-        private readonly IConnectionInfoAsync _connectionInfo;
+        private readonly IDatabase _database;
 
-        public TlsRptSchedulerDao(IConnectionInfoAsync connectionInfo)
+        public TlsRptSchedulerDao(IDatabase database)
         {
-            _connectionInfo = connectionInfo;
+            _database = database;
         }
 
         public async Task<TlsRptSchedulerState> Get(string domain)
         {
-            string id = (string)await MySqlHelper.ExecuteScalarAsync(
-                await _connectionInfo.GetConnectionStringAsync(),
-                TlsRptSchedulerDaoResources.SelectTlsRptRecord,
-                new MySqlParameter("id", domain));
-
-            return id == null
-                ? null
-                : new TlsRptSchedulerState(id);
+            using (var connection = await _database.CreateAndOpenConnectionAsync())
+            {
+                string id = await connection.QueryFirstOrDefaultAsync<string>(
+                    TlsRptSchedulerDaoResources.SelectTlsRptRecord,
+                    new {id = domain});
+                
+                return id == null
+                    ? null
+                    : new TlsRptSchedulerState(id);
+            }
         }
 
         public async Task Save(TlsRptSchedulerState state)
         {
-            int numberOfRowsAffected = await MySqlHelper.ExecuteNonQueryAsync(
-                await _connectionInfo.GetConnectionStringAsync(),
-                TlsRptSchedulerDaoResources.InsertTlsRptRecord,
-                new MySqlParameter("id", state.Id.ToLower()));
-
-            if (numberOfRowsAffected == 0)
+            using (var connection = await _database.CreateAndOpenConnectionAsync())
             {
-                throw new InvalidOperationException($"Didn't save duplicate {nameof(TlsRptSchedulerState)} for {state.Id}");
+                int numberOfRowsAffected = await connection.ExecuteAsync(TlsRptSchedulerDaoResources.InsertTlsRptRecord,
+                    new { id = state.Id.ToLower() });
+
+                if (numberOfRowsAffected == 0)
+                {
+                    throw new InvalidOperationException(
+                        $"Didn't save duplicate {nameof(TlsRptSchedulerState)} for {state.Id}");
+                }
             }
         }
 
-        public async Task Delete(string domain)
+        public async Task<int> Delete(string domain)
         {
-            string connectionString = await _connectionInfo.GetConnectionStringAsync();
-
-            await MySqlHelper.ExecuteNonQueryAsync(connectionString, TlsRptSchedulerDaoResources.DeleteTlsRptRecord, new MySqlParameter("id", domain));
+            using (var connection = await _database.CreateAndOpenConnectionAsync())
+            {
+                return await connection.ExecuteAsync(TlsRptSchedulerDaoResources.DeleteTlsRptRecord,
+                    new {id = domain});
+            }
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MailCheck.Common.Messaging.Abstractions;
 using MailCheck.Common.Util;
+using CommonContracts = MailCheck.Common.Contracts.Messaging;
 
 namespace MailCheck.TlsRpt.Entity.Seeding.DomainCreated
 {
@@ -29,11 +30,11 @@ namespace MailCheck.TlsRpt.Entity.Seeding.DomainCreated
         {
             List<Domain> domains = await _domainDao.GetDomains();
 
-            List<Contracts.External.DomainCreated> domainCreateds =
-                domains.Select(_ => new Contracts.External.DomainCreated(_.Name, _.CreatedBy, _.CreatedDate)).ToList();
+            List<CommonContracts.DomainCreated> domainCreateds =
+                domains.Select(_ => new CommonContracts.DomainCreated(_.Name, _.CreatedBy, _.CreatedDate)).ToList();
 
             int count = 0;
-            foreach (IEnumerable<Contracts.External.DomainCreated> domainCreated in domainCreateds.Batch(10))
+            foreach (IEnumerable<CommonContracts.DomainCreated> domainCreated in domainCreateds.Batch(10))
             {
                 List<Message> messages = domainCreated.Cast<Message>().ToList();
                 await _publisher.Publish(messages, _config.SnsTopicToSeedArn);

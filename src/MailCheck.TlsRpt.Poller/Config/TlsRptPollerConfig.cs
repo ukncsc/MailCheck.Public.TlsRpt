@@ -7,7 +7,6 @@ namespace MailCheck.TlsRpt.Poller.Config
     {
         string SnsTopicArn { get; }
         string NameServer { get; }
-        bool AllowNullResults { get; }
         TimeSpan DnsRecordLookupTimeout { get; }
     }
 
@@ -18,12 +17,10 @@ namespace MailCheck.TlsRpt.Poller.Config
             SnsTopicArn = environmentVariables.Get("SnsTopicArn");
             DnsRecordLookupTimeout = TimeSpan.FromSeconds(environmentVariables.GetAsLong("DnsRecordLookupTimeoutSeconds"));
             NameServer = environmentVariables.Get("NameServer", false);
-            AllowNullResults = environmentVariables.GetAsBoolOrDefault("AllowNullResults");
         }
 
         public string SnsTopicArn { get; }
         public TimeSpan DnsRecordLookupTimeout { get; }
         public string NameServer { get; }
-        public bool AllowNullResults { get; }
     }
 }

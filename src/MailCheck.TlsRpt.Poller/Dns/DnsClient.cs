@@ -44,7 +44,7 @@ namespace MailCheck.TlsRpt.Poller.Dns
 
             if (response.HasError && response.ErrorMessage != NonExistentDomainError && response.ErrorMessage != SERV_FAILURE_ERROR)
             {
-                return new TlsRptRecordInfos(domain, new FailedPollError(response.ErrorMessage) , response.MessageSize);
+                return new TlsRptRecordInfos(domain, new FailedPollError(response.ErrorMessage) , response.MessageSize, response.NameServer.ToString(), response.AuditTrail);
             }
 
             return new TlsRptRecordInfos(domain, tlsRptRecordInfos, response.MessageSize);

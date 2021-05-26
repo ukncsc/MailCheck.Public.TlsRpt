@@ -7,14 +7,14 @@
     <ItemGroup>
       <PackageReference Include="Flurl" Version="2.8.0" />
       <PackageReference Include="Flurl.Http" Version="2.4.0" />
-      <PackageReference Include="MailCheck.Common.Api" Version="1.8.0.52" />
-      <PackageReference Include="MailCheck.Common.Contracts" Version="1.8.0.52" />
-      <PackageReference Include="MailCheck.Common.Data" Version="1.8.0.52" />
-      <PackageReference Include="MailCheck.Common.Environment" Version="1.8.0.52" />
-      <PackageReference Include="MailCheck.Common.Logging" Version="1.8.0.52" />
-      <PackageReference Include="MailCheck.Common.Messaging" Version="1.8.0.52" />
-      <PackageReference Include="MailCheck.Common.Util" Version="1.8.0.52" />
-      <PackageReference Include="MailCheck.Common.SSM" Version="1.8.0.52" />
+      <PackageReference Include="MailCheck.Common.Api" Version="5.1.0" />
+      <PackageReference Include="MailCheck.Common.Contracts" Version="5.1.0" />
+      <PackageReference Include="MailCheck.Common.Data" Version="5.1.0" />
+      <PackageReference Include="MailCheck.Common.Environment" Version="5.1.0" />
+      <PackageReference Include="MailCheck.Common.Logging" Version="5.1.0" />
+      <PackageReference Include="MailCheck.Common.Messaging" Version="5.1.0" />
+      <PackageReference Include="MailCheck.Common.Util" Version="5.1.0" />
+      <PackageReference Include="MailCheck.Common.SSM" Version="5.1.0" />
       <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.15" />
       <PackageReference Include="Microsoft.AspNetCore.HealthChecks" Version="1.0.0" />
       <PackageReference Include="FluentValidation.AspNetCore" Version="8.1.3" />

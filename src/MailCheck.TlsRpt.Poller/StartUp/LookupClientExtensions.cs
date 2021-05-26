@@ -22,12 +22,16 @@ namespace MailCheck.TlsRpt.Poller.StartUp
                 {
                     Timeout = provider.GetRequiredService<ITlsRptPollerConfig>().DnsRecordLookupTimeout
                 }
-                : new LookupClient(provider.GetService<IDnsNameServerProvider>().GetNameServers()
+                : new LookupClient(new LookupClientOptions(provider.GetService<IDnsNameServerProvider>()
+                    .GetNameServers()
                     .Select(_ => new IPEndPoint(_, 53)).ToArray())
                 {
-                    Timeout = provider.GetRequiredService<ITlsRptPollerConfig>().DnsRecordLookupTimeout,
-                    UseTcpOnly = true
-                };
+                    ContinueOnEmptyResponse = false,
+                    UseCache = false,
+                    UseTcpOnly = true,
+                    EnableAuditTrail = true,
+                    Timeout = provider.GetRequiredService<ITlsRptPollerConfig>().DnsRecordLookupTimeout
+                });
         }
     }
 }

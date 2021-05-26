@@ -13,10 +13,11 @@
     <PackageReference Include="Amazon.Lambda.Core" Version="1.1.0" />
     <PackageReference Include="Amazon.Lambda.Serialization.Json" Version="1.5.0" />
     <PackageReference Include="DnsClient" Version="1.2.0" />
-    <PackageReference Include="MailCheck.Common.Data" Version="1.8.0.52" />
-    <PackageReference Include="MailCheck.Common.Messaging" Version="1.8.0.52" />
-    <PackageReference Include="MailCheck.Common.Util" Version="1.8.0.52" />
-    <PackageReference Include="MailCheck.Common.SSM" Version="1.8.0.52" />
+    <PackageReference Include="MailCheck.Common.Contracts" Version="5.1.0" />
+    <PackageReference Include="MailCheck.Common.Data" Version="5.1.0" />
+    <PackageReference Include="MailCheck.Common.Messaging" Version="5.1.0" />
+    <PackageReference Include="MailCheck.Common.Util" Version="5.1.0" />
+    <PackageReference Include="MailCheck.Common.SSM" Version="5.1.0" />
     <PackageReference Include="Microsoft.Extensions.CommandLineUtils" Version="1.1.1" />
   </ItemGroup>
 

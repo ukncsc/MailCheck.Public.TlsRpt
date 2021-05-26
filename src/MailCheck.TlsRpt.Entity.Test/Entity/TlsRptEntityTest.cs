@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FakeItEasy;
+using MailCheck.Common.Contracts.Messaging;
 using MailCheck.Common.Messaging.Abstractions;
 using MailCheck.Common.Messaging.Common.Exception;
 using MailCheck.TlsRpt.Contracts;
 using MailCheck.TlsRpt.Contracts.Entity;
 using MailCheck.TlsRpt.Contracts.Evaluator;
-using MailCheck.TlsRpt.Contracts.External;
 using MailCheck.TlsRpt.Contracts.Scheduler;
 using MailCheck.TlsRpt.Contracts.SharedDomain;
 using MailCheck.TlsRpt.Entity.Config;
@@ -55,10 +55,13 @@ namespace MailCheck.TlsRpt.Entity.Test.Entity
         }
 
         [Test]
-        public void HandleDomainCreatedThrowsIfEntityAlreadyExistsForDomain()
+        public async Task HandleDomainCreatedThrowsIfEntityAlreadyExistsForDomain()
         {
             A.CallTo(() => _tlsRptEntityDao.Get(Id)).Returns(new TlsRptEntityState(Id, 1, TlsRptState.PollPending, DateTime.UtcNow));
-            Assert.ThrowsAsync<MailCheckException>(() => _tlsRptEntity.Handle(new DomainCreated(Id, "test@test.com", DateTime.Now)));
+            await _tlsRptEntity.Handle(new DomainCreated(Id, "test@test.com", DateTime.Now));
+
+            A.CallTo(() => _tlsRptEntityDao.Save(A<TlsRptEntityState>._)).MustNotHaveHappened();
+            A.CallTo(() => _dispatcher.Dispatch(A<TlsRptEntityCreated>._, A<string>._)).MustHaveHappenedOnceExactly();
         }
 
         [Test]
@@ -76,7 +79,6 @@ namespace MailCheck.TlsRpt.Entity.Test.Entity
             A.CallTo(() => _tlsRptEntityDao.Save(A<TlsRptEntityState>._)).MustHaveHappenedOnceExactly();
             A.CallTo(() => _dispatcher.Dispatch(A<TlsRptPollPending>._, A<string>._)).MustHaveHappenedOnceExactly();
         }
-
 
         [Test]
         public async Task HandleTlsRptRecordsEvaluatedAndNewEvaluationUpdatesStateAndPublishes()

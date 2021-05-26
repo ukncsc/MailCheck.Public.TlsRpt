@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using MailCheck.Common.Contracts.Messaging;
 using MailCheck.Common.Messaging.Abstractions;
-using MailCheck.TlsRpt.Contracts.External;
 using MailCheck.TlsRpt.Contracts.Poller;
 using MailCheck.TlsRpt.EntityHistory.Config;
 using MailCheck.TlsRpt.EntityHistory.Dao;
@@ -35,20 +35,20 @@ namespace MailCheck.TlsRpt.EntityHistory.Entity
 
         public async Task Handle(DomainCreated message)
         {
-            string messageId = message.Id.ToLower();
+            string domain = message.Id.ToLower();
 
-            TlsRptEntityHistoryState state = await _dao.Get(messageId);
+            TlsRptEntityHistoryState state = await _dao.Get(domain);
 
             if (state == null)
             {
-                state = new TlsRptEntityHistoryState(messageId);
+                state = new TlsRptEntityHistoryState(domain);
                 await _dao.Save(state);
-                _log.LogInformation("Created TlsRptHistoryEntity for {Id}.", messageId);
+                _log.LogInformation("Created TlsRptHistoryEntity for {Id}.", domain);
             }
             else
             {
-                _log.LogWarning("Ignoring {EventName} as TlsRptHistoryEntity already exists for {Id}.",
-                    nameof(DomainCreated), messageId);
+                _log.LogInformation("Ignoring {EventName} as TlsRptHistoryEntity already exists for {Id}.",
+                    nameof(DomainCreated), domain);
             }
         }
 

@@ -63,8 +63,6 @@ namespace MailCheck.TlsRpt.Scheduler
                 {
                     await ProcessMessages(queueUrl, entryPoint, receiveMessageRequest);
                 }
-
-                return 0;
             });
         };
 

@@ -1,6 +1,7 @@
-﻿using MailCheck.Common.Messaging.Abstractions;
+﻿using MailCheck.Common.Contracts.Messaging;
+using MailCheck.Common.Data;
+using MailCheck.Common.Messaging.Abstractions;
 using MailCheck.TlsRpt.Contracts.Entity;
-using MailCheck.TlsRpt.Contracts.External;
 using MailCheck.TlsRpt.Scheduler.Config;
 using MailCheck.TlsRpt.Scheduler.Dao;
 using MailCheck.TlsRpt.Scheduler.Handler;
@@ -18,7 +19,8 @@ namespace MailCheck.TlsRpt.Scheduler.StartUp
                 .AddTransient<ITlsRptSchedulerConfig, TlsRptSchedulerConfig>()
                 .AddTransient<IHandle<TlsRptEntityCreated>, TlsRptSchedulerHandler>()
                 .AddTransient<IHandle<DomainDeleted>, TlsRptSchedulerHandler>()
-                .AddTransient<ITlsRptSchedulerDao, TlsRptSchedulerDao>();
+                .AddTransient<ITlsRptSchedulerDao, TlsRptSchedulerDao>()
+                .AddSingleton<IDatabase, DefaultDatabase<MySqlProvider>>();
         }
     }
 }

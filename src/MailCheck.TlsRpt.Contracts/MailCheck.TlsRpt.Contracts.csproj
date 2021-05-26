@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MailCheck.Common.Messaging.Abstractions" Version="1.8.0.52" />
+    <PackageReference Include="MailCheck.Common.Messaging.Abstractions" Version="5.1.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
   </ItemGroup>
 

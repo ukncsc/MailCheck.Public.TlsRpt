@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <ApplicationIcon />
+    <OutputType>Exe</OutputType>
+    <StartupObject />
+    <LangVersion>7.1</LangVersion>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="Amazon.Lambda.Core" Version="1.1.0" />
+    <DotNetCliToolReference Include="Amazon.Lambda.Tools" Version="2.1.4" />
+    <PackageReference Include="Amazon.Lambda.S3Events" Version="1.1.0" />
+    <PackageReference Include="AWSSDK.S3" Version="3.3.31.20" />
+    <PackageReference Include="MailCheck.Common.Messaging" Version="5.1.0" />
+    <PackageReference Include="MailCheck.Common.Util" Version="5.1.0" />
+    <PackageReference Include="MailCheck.Common.Data" Version="5.1.0" />
+    <PackageReference Include="MailCheck.Common.Environment" Version="5.1.0" />
+    <PackageReference Include="MailCheck.Common.SSM" Version="5.1.0" />
+    <PackageReference Include="MailKit" Version="2.0.6" />
+    <PackageReference Include="Microsoft.Extensions.CommandLineUtils" Version="1.1.1" />
+    <PackageReference Include="AWSSDK.SimpleSystemsManagement" Version="3.3.38.3" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.0.2" />
+    <PackageReference Include="MongoDB.Bson" Version="2.11.4" />
+    <PackageReference Include="MongoDB.Driver" Version="2.11.4" />
+    <PackageReference Include="Newtonsoft.Json.Bson" Version="1.0.2" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\MailCheck.TlsRpt.Reports.Contracts\MailCheck.TlsRpt.Reports.Contracts.csproj" />
+  </ItemGroup>
+</Project>

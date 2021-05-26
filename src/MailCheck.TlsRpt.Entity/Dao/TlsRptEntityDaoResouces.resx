@@ -126,7 +126,7 @@
 `version`,
 `state`)
 VALUES
-(LOWER(@domain),
+(@domain,
 @version,
 @state)
 ON DUPLICATE KEY UPDATE 

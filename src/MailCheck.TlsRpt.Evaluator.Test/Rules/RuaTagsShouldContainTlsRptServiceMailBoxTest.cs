@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MailCheck.TlsRpt.Contracts.SharedDomain;
 using MailCheck.TlsRpt.Evaluator.Rules;
 using NUnit.Framework;
+using Uri = MailCheck.TlsRpt.Contracts.SharedDomain.Uri;
 
 namespace MailCheck.TlsRpt.Evaluator.Test.Rules
 {
@@ -134,7 +136,7 @@ namespace MailCheck.TlsRpt.Evaluator.Test.Rules
             string actualMarkdown = (await _rule.Evaluate(testTlsRptRecord)).First().MarkDown;
 
             string expectedMarkdown =
-                "The TLS-RPT record does not contain the NCSC Mail Check email address, it's fine to use other tools but be aware that we won't be able to help you investigate encrypted email deliverability, and you won't see any reporting in Mail Check.\n\nIf you would like Mail Check to receive a copy of your reports, then please change your record to:\n\n`rua=mailto:tls-rua@mailcheck.service.ncsc.gov.uk;`";
+                $"The TLS-RPT record does not contain the NCSC Mail Check email address, it's fine to use other tools but be aware that we won't be able to help you investigate encrypted email deliverability, and you won't see any reporting in Mail Check.{Environment.NewLine}{Environment.NewLine}If you would like Mail Check to receive a copy of your reports, then please change your record to:{Environment.NewLine}{Environment.NewLine}`rua=mailto:tls-rua@mailcheck.service.ncsc.gov.uk;`";
 
             Assert.AreEqual(expectedMarkdown, actualMarkdown);
         }
@@ -157,7 +159,7 @@ namespace MailCheck.TlsRpt.Evaluator.Test.Rules
             string actualMarkdown = (await _rule.Evaluate(testTlsRptRecord)).First().MarkDown;
 
             string expectedMarkdown =
-                "The TLS-RPT record does not contain the NCSC Mail Check email address, it's fine to use other tools but be aware that we won't be able to help you investigate encrypted email deliverability, and you won't see any reporting in Mail Check.\n\nIf you would like Mail Check to receive a copy of your reports, then please change your record to:\n\n`rua=mailto:tls-rua@mailcheck.service.ncsc.gov.uk;`";
+                $"The TLS-RPT record does not contain the NCSC Mail Check email address, it's fine to use other tools but be aware that we won't be able to help you investigate encrypted email deliverability, and you won't see any reporting in Mail Check.{Environment.NewLine}{Environment.NewLine}If you would like Mail Check to receive a copy of your reports, then please change your record to:{Environment.NewLine}{Environment.NewLine}`rua=mailto:tls-rua@mailcheck.service.ncsc.gov.uk;`";
 
             Assert.AreEqual(expectedMarkdown, actualMarkdown);
         }
@@ -220,7 +222,7 @@ namespace MailCheck.TlsRpt.Evaluator.Test.Rules
             string actualMarkdown = (await _rule.Evaluate(testTlsRptRecord)).First().MarkDown;
 
             string expectedMarkdown =
-                "Your TLS-RPT record contains the wrong email address for Mail Check aggregate report processing.\n\nPlease change your TLS-RPT record to be:\n\n`v=TLSRPTv1;rua=mailto:tlsrpt@example.com`";
+                $"Your TLS-RPT record contains the wrong email address for Mail Check aggregate report processing.{Environment.NewLine}{Environment.NewLine}Please change your TLS-RPT record to be:{Environment.NewLine}{Environment.NewLine}`v=TLSRPTv1;rua=mailto:tlsrpt@example.com`";
 
             Assert.AreEqual(expectedMarkdown, actualMarkdown);
         }
@@ -246,7 +248,7 @@ namespace MailCheck.TlsRpt.Evaluator.Test.Rules
             string actualMarkdown = (await _rule.Evaluate(testTlsRptRecord)).First().MarkDown;
 
             string expectedMarkdown =
-                "Your TLS-RPT record contains the wrong email address for Mail Check aggregate report processing.\n\nPlease change your TLS-RPT record to be:\n\n`v=TLSRPTv1;rua=mailto:tls-rua@mailcheck.service.ncsc.gov.uk;`";
+                $"Your TLS-RPT record contains the wrong email address for Mail Check aggregate report processing.{Environment.NewLine}{Environment.NewLine}Please change your TLS-RPT record to be:{Environment.NewLine}{Environment.NewLine}`v=TLSRPTv1;rua=mailto:tls-rua@mailcheck.service.ncsc.gov.uk;`";
 
             Assert.AreEqual(expectedMarkdown, actualMarkdown);
         }
@@ -273,7 +275,7 @@ namespace MailCheck.TlsRpt.Evaluator.Test.Rules
             string actualMarkdown = (await _rule.Evaluate(testTlsRptRecord)).First().MarkDown;
 
             string expectedMarkdown =
-                "Your TLS-RPT record contains the wrong email address for Mail Check aggregate report processing.\n\nPlease change your TLS-RPT record to be:\n\n`v=TLSRPTv1;rua=mailto:tls-rua@mailcheck.service.ncsc.gov.uk,mailto:0007756a@mxtoolbox.tls-report.com;`";
+                $"Your TLS-RPT record contains the wrong email address for Mail Check aggregate report processing.{Environment.NewLine}{Environment.NewLine}Please change your TLS-RPT record to be:{Environment.NewLine}{Environment.NewLine}`v=TLSRPTv1;rua=mailto:tls-rua@mailcheck.service.ncsc.gov.uk,mailto:0007756a@mxtoolbox.tls-report.com;`";
 
             Assert.AreEqual(expectedMarkdown, actualMarkdown);
         }

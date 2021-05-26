@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using MailCheck.TlsRpt.Poller.Config;
 using MailCheck.TlsRpt.Poller.Dns;
@@ -6,6 +7,7 @@ using MailCheck.TlsRpt.Poller.Domain;
 using MailCheck.TlsRpt.Poller.Exceptions;
 using MailCheck.TlsRpt.Poller.Parsing;
 using MailCheck.TlsRpt.Poller.Rules;
+using Microsoft.Extensions.Logging;
 
 namespace MailCheck.TlsRpt.Poller
 {
@@ -19,34 +21,39 @@ namespace MailCheck.TlsRpt.Poller
         private readonly IDnsClient _dnsClient;
         private readonly ITlsRptRecordsParser _parser;
         private readonly ITlsRptRecordsEvaluator _evaluator;
-        private readonly ITlsRptPollerConfig _config;
+        private readonly ILogger<TlsRptProcessor> _log;
 
         public TlsRptProcessor(IDnsClient dnsClient,
             ITlsRptRecordsParser parser,
             ITlsRptRecordsEvaluator evaluator, 
-            ITlsRptPollerConfig config)
+            ITlsRptPollerConfig config, ILogger<TlsRptProcessor> log)
         {
             _dnsClient = dnsClient;
             _parser = parser;
             _evaluator = evaluator;
-            _config = config;
+            _log = log;
         }
 
         public async Task<TlsRptPollResult> Process(string domain)
         {
             TlsRptRecordInfos tlsRptRecordInfos = await _dnsClient.GetTlsRptRecords(domain);
 
-            if (!_config.AllowNullResults && (tlsRptRecordInfos.HasError ||
-                                              tlsRptRecordInfos.RecordsInfos.TrueForAll(x => string.IsNullOrWhiteSpace(x.Record))))
-            {
-                throw new TlsRptPollerException($"Unable to retrieve TLS-RPT records for {domain}.");
-            }
-
             if (tlsRptRecordInfos.HasError)
             {
+                string message = $"Failed TLS/RPT record query for {domain} with error {tlsRptRecordInfos.Error}";
+
+                _log.LogError($"{message} {Environment.NewLine} Audit Trail: {tlsRptRecordInfos.AuditTrail}");
+
                 return new TlsRptPollResult(domain, tlsRptRecordInfos.Error);
             }
 
+            if (tlsRptRecordInfos.RecordsInfos.Count == 0 ||
+                tlsRptRecordInfos.RecordsInfos.TrueForAll(x => string.IsNullOrWhiteSpace(x.Record)))
+            {
+                _log.LogInformation(
+                    $"TLS/RPT records missing or empty for {domain}, Name server: {tlsRptRecordInfos.NameServer}");
+            }
+            
             EvaluationResult<TlsRptRecords> parsingResult = _parser.Parse(tlsRptRecordInfos);
 
             EvaluationResult<TlsRptRecords> evaluationResult = await _evaluator.Evaluate(parsingResult.Item);

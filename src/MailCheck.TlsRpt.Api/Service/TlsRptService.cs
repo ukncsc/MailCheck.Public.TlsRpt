@@ -4,6 +4,7 @@ using MailCheck.Common.Messaging.Abstractions;
 using MailCheck.TlsRpt.Api.Domain;
 using MailCheck.TlsRpt.Api.Config;
 using MailCheck.TlsRpt.Api.Dao;
+using Microsoft.Extensions.Logging;
 
 namespace MailCheck.TlsRpt.Api.Service
 {
@@ -17,12 +18,14 @@ namespace MailCheck.TlsRpt.Api.Service
         private readonly ITlsRptApiDao _dao;
         private readonly IMessagePublisher _messagePublisher;
         private readonly ITlsRptApiConfig _config;
+        private readonly ILogger<ITlsRptService> _log;
 
-        public TlsRptService(IMessagePublisher messagePublisher, ITlsRptApiDao dao, ITlsRptApiConfig config)
+        public TlsRptService(IMessagePublisher messagePublisher, ITlsRptApiDao dao, ITlsRptApiConfig config, ILogger<ITlsRptService> log)
         {
             _messagePublisher = messagePublisher;
             _dao = dao;
             _config = config;
+            _log = log;
         }
 
         public async Task<TlsRptInfoResponse> GetTlsRptForDomain(string requestDomain)
@@ -31,6 +34,7 @@ namespace MailCheck.TlsRpt.Api.Service
 
             if (response is null)
             {
+                _log.LogInformation($"TlsRpt entity state does not exist for domain {requestDomain} - publishing DomainMissing");
                 await _messagePublisher.Publish(new DomainMissing(requestDomain), _config.MicroserviceOutputSnsTopicArn);
             }
 

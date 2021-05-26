@@ -12,7 +12,7 @@ namespace MailCheck.TlsRpt.Entity.Dao
     {
         Task<TlsRptEntityState> Get(string domain);
         Task Save(TlsRptEntityState state);
-        Task Delete(string domain);
+        Task<int> Delete(string domain);
     }
 
     public class TlsRptEntityDao : ITlsRptEntityDao
@@ -43,7 +43,7 @@ namespace MailCheck.TlsRpt.Entity.Dao
             string serializedState = JsonConvert.SerializeObject(state);
 
             int rowsAffected = await MySqlHelper.ExecuteNonQueryAsync(connectionString, TlsRptEntityDaoResouces.InsertTlsRptEntity,
-                new MySqlParameter("domain", state.Id),
+                new MySqlParameter("domain", state.Id.ToLower()),
                 new MySqlParameter("version", state.Version),
                 new MySqlParameter("state", serializedState));
 
@@ -54,11 +54,11 @@ namespace MailCheck.TlsRpt.Entity.Dao
             }
         }
 
-        public async Task Delete(string domain)
+        public async Task<int> Delete(string domain)
         {
             string connectionString = await _connectionInfoAsync.GetConnectionStringAsync();
 
-            await MySqlHelper.ExecuteNonQueryAsync(connectionString, TlsRptEntityDaoResouces.DeleteTlsRptEntity, new MySqlParameter("id", domain));
+            return await MySqlHelper.ExecuteNonQueryAsync(connectionString, TlsRptEntityDaoResouces.DeleteTlsRptEntity, new MySqlParameter("id", domain));
         }
     }
 }

@@ -43,6 +43,13 @@ namespace MailCheck.TlsRpt.Entity.Entity.Notifiers
                     TlsRptAdvisoryRemoved advisoryRemoved = new TlsRptAdvisoryRemoved(state.Id, removedMessages.Select(x => new AdvisoryMessage((MessageType) x.MessageType, x.Text, (Notifications.MessageDisplay) x.MessageDisplay)) .ToList());
                     _dispatcher.Dispatch(advisoryRemoved, _tlsRptEntityConfig.SnsTopicArn);
                 }
+
+                List<Message> sustainedMessages = currentMessages.Intersect(newMessages, _messageEqualityComparer).ToList();
+                if (sustainedMessages.Any())
+                {
+                    TlsRptAdvisorySustained advisorySustained = new TlsRptAdvisorySustained(state.Id, sustainedMessages.Select(x => new AdvisoryMessage((MessageType)x.MessageType, x.Text, (Notifications.MessageDisplay)x.MessageDisplay)).ToList());
+                    _dispatcher.Dispatch(advisorySustained, _tlsRptEntityConfig.SnsTopicArn);
+                }
             }
         }
     }

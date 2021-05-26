@@ -34,10 +34,10 @@
     <PackageReference Include="Amazon.Lambda.Core" Version="1.1.0" />
     <PackageReference Include="Amazon.Lambda.Serialization.Json" Version="1.5.0" />
     <PackageReference Include="Flurl.Http" Version="2.4.1" />
-    <PackageReference Include="MailCheck.Common.Messaging" Version="1.8.0.52" />
-    <PackageReference Include="MailCheck.Common.Api" Version="1.8.0.52" />
-    <PackageReference Include="MailCheck.Common.Util" Version="1.8.0.52" />
-    <PackageReference Include="MailCheck.Common.SSM" Version="1.8.0.52" />
+    <PackageReference Include="MailCheck.Common.Messaging" Version="5.1.0" />
+    <PackageReference Include="MailCheck.Common.Api" Version="5.1.0" />
+    <PackageReference Include="MailCheck.Common.Util" Version="5.1.0" />
+    <PackageReference Include="MailCheck.Common.SSM" Version="5.1.0" />
     <PackageReference Include="Microsoft.Extensions.CommandLineUtils" Version="1.1.1" />
   </ItemGroup>
 

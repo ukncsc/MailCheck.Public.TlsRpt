@@ -1,5 +1,8 @@
-﻿using MailCheck.Common.Messaging.Abstractions;
+﻿using MailCheck.Common.Data;
+using MailCheck.Common.Environment.FeatureManagement;
+using MailCheck.Common.Messaging.Abstractions;
 using MailCheck.Common.Messaging.Sns;
+using MailCheck.Common.Util;
 using MailCheck.TlsRpt.Scheduler.Config;
 using MailCheck.TlsRpt.Scheduler.Dao;
 using MailCheck.TlsRpt.Scheduler.Processor;
@@ -17,8 +20,10 @@ namespace MailCheck.TlsRpt.Scheduler.StartUp
             services
                 .AddTransient<ITlsRptPeriodicSchedulerConfig, TlsRptPeriodicSchedulerConfig>()
                 .AddTransient<IProcess, TlsRptPollSchedulerProcessor>()
-                .AddTransient<ITlsRptPeriodicSchedulerDao, TlsRptPeriodicSchedulerDao>()
-                .AddTransient<IMessagePublisher, SnsMessagePublisher>();
+                .AddTransient<IMessagePublisher, SnsMessagePublisher>()
+                .AddSingleton<IDatabase, DefaultDatabase<MySqlProvider>>()
+                .AddTransient<IClock, Clock>()
+                .AddTransient<ITlsRptPeriodicSchedulerDao, TlsRptPeriodicSchedulerDao>();
         }
     }
 }

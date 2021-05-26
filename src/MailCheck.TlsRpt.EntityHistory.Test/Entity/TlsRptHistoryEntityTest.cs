@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using FakeItEasy;
 using MailCheck.Common.Contracts.Messaging;
 using MailCheck.Common.Messaging.Abstractions;
-using MailCheck.TlsRpt.Contracts.External;
 using MailCheck.TlsRpt.Contracts.Poller;
 using MailCheck.TlsRpt.Contracts.SharedDomain;
 using MailCheck.TlsRpt.EntityHistory.Config;

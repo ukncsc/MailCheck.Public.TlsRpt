@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
+using MailCheck.Common.Contracts.Messaging;
 using MailCheck.Common.Messaging.Abstractions;
 using MailCheck.TlsRpt.Contracts.Entity;
-using MailCheck.TlsRpt.Contracts.External;
 using MailCheck.TlsRpt.Scheduler.Config;
 using MailCheck.TlsRpt.Scheduler.Dao;
 using MailCheck.TlsRpt.Scheduler.Dao.Model;
@@ -52,8 +52,15 @@ namespace MailCheck.TlsRpt.Scheduler.Handler
         public async Task Handle(DomainDeleted message)
         {
             string domain = message.Id.ToLower();
-            await _dao.Delete(domain);
-            _log.LogInformation($"Deleted schedule for TLSRPT entity with id: {domain}.");
+            int rows = await _dao.Delete(domain);
+            if (rows == 1)
+            {
+                _log.LogInformation($"Deleted schedule for TLSRPT entity with id: {domain}.");
+            }
+            else
+            {
+                _log.LogInformation($"Schedule already deleted for TLSRPT entity with id: {domain}.");
+            }
         }
     }
 }

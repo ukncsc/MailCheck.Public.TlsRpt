@@ -22,7 +22,7 @@ namespace MailCheck.TlsRpt.Api
 
             if (RunInDevMode())
             {
-                webHostBuilder.UseUrls("http://localhost:5007");
+                webHostBuilder.UseUrls("http://+:5009");
             }
 
             return webHostBuilder;

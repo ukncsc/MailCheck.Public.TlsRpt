@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
 using FakeItEasy;
+using MailCheck.Common.Data;
 using MailCheck.Common.Data.Abstractions;
 using MailCheck.Common.TestSupport;
+using MailCheck.Common.Util;
 using MailCheck.TlsRpt.Migration;
 using MailCheck.TlsRpt.Scheduler.Config;
 using MailCheck.TlsRpt.Scheduler.Dao;
@@ -19,6 +21,8 @@ namespace MailCheck.TlsRpt.Scheduler.Test.Dao
     public class TlsRptPeriodicSchedulerDaoTests : DatabaseTestBase
     {
         private TlsRptPeriodicSchedulerDao _dao;
+        private IDatabase _database;
+        private IClock _clock;
 
         [SetUp]
         protected override void SetUp()
@@ -26,15 +30,14 @@ namespace MailCheck.TlsRpt.Scheduler.Test.Dao
             base.SetUp();
 
             TruncateDatabase().Wait();
-
-            IConnectionInfoAsync connectionInfoAsync = A.Fake<IConnectionInfoAsync>();
-            A.CallTo(() => connectionInfoAsync.GetConnectionStringAsync()).Returns(ConnectionString);
+            _database = A.Fake<IDatabase>();
+            _clock = A.Fake<IClock>();
 
             ITlsRptPeriodicSchedulerConfig config = A.Fake<ITlsRptPeriodicSchedulerConfig>();
             A.CallTo(() => config.RefreshIntervalSeconds).Returns(0);
             A.CallTo(() => config.DomainBatchSize).Returns(10);
 
-            _dao = new TlsRptPeriodicSchedulerDao(connectionInfoAsync, config);
+            _dao = new TlsRptPeriodicSchedulerDao(config, _database, _clock);
         }
 
         [Test]

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.136
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MailCheck.TlsRpt.Entity", "MailCheck.TlsRpt.Entity\MailCheck.TlsRpt.Entity.csproj", "{F70DD660-DE58-4666-A4F9-53D69D1D7BCC}"
 EndProject
@@ -34,6 +34,16 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MailCheck.TlsRpt.EntityHistory.Test", "MailCheck.TlsRpt.EntityHistory.Test\MailCheck.TlsRpt.EntityHistory.Test.csproj", "{5E8EEE6A-F9BD-4CBB-A546-6824F7BBF45E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MailCheck.TlsRpt.Migration", "MailCheck.TlsRpt.Migration\MailCheck.TlsRpt.Migration.csproj", "{2BB7163A-74D7-46F4-943F-576AD501FF10}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MailCheck.TlsRpt.Reports.Processor", "MailCheck.TlsRpt.Reports.Processor\MailCheck.TlsRpt.Reports.Processor.csproj", "{32E73547-3E3D-44E1-8B66-41363DB22DEB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MailCheck.TlsRpt.Reports.Processor.Test", "MailCheck.TlsRpt.Reports.Processor.Test\MailCheck.TlsRpt.Reports.Processor.Test.csproj", "{910ADACE-FDEC-46D4-842D-D434A227BD46}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MailCheck.TlsRpt.Reports.Api", "MailCheck.TlsRpt.Reports.Api\MailCheck.TlsRpt.Reports.Api.csproj", "{49710B52-44E7-4160-ADE4-64A6BB2349F8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MailCheck.TlsRpt.Reports.Contracts", "MailCheck.TlsRpt.Reports.Contracts\MailCheck.TlsRpt.Reports.Contracts.csproj", "{D41B075F-CDBA-40F3-9364-FA6F50E93F78}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MailCheck.TlsRpt.Reports.Api.Test", "MailCheck.TlsRpt.Reports.Api.Test\MailCheck.TlsRpt.Reports.Api.Test.csproj", "{4535418F-8C8B-46FF-85D8-320D52526F4C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -97,6 +107,26 @@ Global
 		{2BB7163A-74D7-46F4-943F-576AD501FF10}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2BB7163A-74D7-46F4-943F-576AD501FF10}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2BB7163A-74D7-46F4-943F-576AD501FF10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32E73547-3E3D-44E1-8B66-41363DB22DEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32E73547-3E3D-44E1-8B66-41363DB22DEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32E73547-3E3D-44E1-8B66-41363DB22DEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32E73547-3E3D-44E1-8B66-41363DB22DEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{910ADACE-FDEC-46D4-842D-D434A227BD46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{910ADACE-FDEC-46D4-842D-D434A227BD46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{910ADACE-FDEC-46D4-842D-D434A227BD46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{910ADACE-FDEC-46D4-842D-D434A227BD46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49710B52-44E7-4160-ADE4-64A6BB2349F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49710B52-44E7-4160-ADE4-64A6BB2349F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49710B52-44E7-4160-ADE4-64A6BB2349F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49710B52-44E7-4160-ADE4-64A6BB2349F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D41B075F-CDBA-40F3-9364-FA6F50E93F78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D41B075F-CDBA-40F3-9364-FA6F50E93F78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D41B075F-CDBA-40F3-9364-FA6F50E93F78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D41B075F-CDBA-40F3-9364-FA6F50E93F78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4535418F-8C8B-46FF-85D8-320D52526F4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4535418F-8C8B-46FF-85D8-320D52526F4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4535418F-8C8B-46FF-85D8-320D52526F4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4535418F-8C8B-46FF-85D8-320D52526F4C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -116,6 +146,11 @@ Global
 		{77C45637-D27E-4482-94BF-5AE6A59C60EC} = {08420503-F895-45FB-93CD-37FF9AE6E277}
 		{5E8EEE6A-F9BD-4CBB-A546-6824F7BBF45E} = {3668346A-2434-4DB2-80E7-093C55578E38}
 		{2BB7163A-74D7-46F4-943F-576AD501FF10} = {08420503-F895-45FB-93CD-37FF9AE6E277}
+		{32E73547-3E3D-44E1-8B66-41363DB22DEB} = {08420503-F895-45FB-93CD-37FF9AE6E277}
+		{910ADACE-FDEC-46D4-842D-D434A227BD46} = {3668346A-2434-4DB2-80E7-093C55578E38}
+		{49710B52-44E7-4160-ADE4-64A6BB2349F8} = {08420503-F895-45FB-93CD-37FF9AE6E277}
+		{D41B075F-CDBA-40F3-9364-FA6F50E93F78} = {08420503-F895-45FB-93CD-37FF9AE6E277}
+		{4535418F-8C8B-46FF-85D8-320D52526F4C} = {3668346A-2434-4DB2-80E7-093C55578E38}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {900BCC9F-4329-423A-86DF-A23D704AFD9A}

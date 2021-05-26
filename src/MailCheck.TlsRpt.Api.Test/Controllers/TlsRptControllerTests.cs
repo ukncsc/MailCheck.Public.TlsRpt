@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Threading.Tasks;
 using FakeItEasy;
 using MailCheck.Common.Api.Authorisation.Filter;
 using MailCheck.Common.Messaging.Abstractions;
@@ -9,15 +12,6 @@ using MailCheck.TlsRpt.Api.Domain;
 using MailCheck.TlsRpt.Api.Service;
 using MailCheck.TlsRpt.Contracts.SharedDomain;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-using MailCheck.Common.Api.Authorisation.Filter;
-using MailCheck.Common.Api.Authorisation.Service;
-using MailCheck.Common.Api.Authorisation.Service.Domain;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 
 namespace MailCheck.TlsRpt.Api.Test.Controllers

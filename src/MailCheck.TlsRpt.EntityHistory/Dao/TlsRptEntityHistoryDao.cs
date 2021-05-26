@@ -46,7 +46,7 @@ namespace MailCheck.TlsRpt.EntityHistory.Dao
 
             await MySqlHelper.ExecuteNonQueryAsync(connectionString,
                 TlsRptEntityHistoryDaoResouces.InsertTlsRptEntityHistory,
-                new MySqlParameter("domain", state.Id),
+                new MySqlParameter("domain", state.Id.ToLower()),
                 new MySqlParameter("state", serializedState));
         }
     }

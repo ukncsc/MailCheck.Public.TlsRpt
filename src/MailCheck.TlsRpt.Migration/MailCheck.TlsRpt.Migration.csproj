@@ -30,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MailCheck.Common.Data.Migration" Version="4.3.0" />
+    <PackageReference Include="MailCheck.Common.Data.Migration" Version="5.1.0" />
   </ItemGroup>
 
 </Project>

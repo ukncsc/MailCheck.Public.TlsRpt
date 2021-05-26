@@ -7,6 +7,7 @@ using MailCheck.TlsRpt.Api.Dao;
 using MailCheck.TlsRpt.Api.Domain;
 using MailCheck.TlsRpt.Api.Service;
 using MailCheck.TlsRpt.Contracts.SharedDomain;
+using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 
 namespace MailCheck.TlsRpt.Api.Test.Service
@@ -18,6 +19,7 @@ namespace MailCheck.TlsRpt.Api.Test.Service
         private IMessagePublisher _messagePublisher;
         private ITlsRptApiDao _dao;
         private ITlsRptApiConfig _config;
+        private ILogger<ITlsRptService> _log;
 
         [SetUp]
         public void SetUp()
@@ -25,7 +27,8 @@ namespace MailCheck.TlsRpt.Api.Test.Service
             _messagePublisher = A.Fake<IMessagePublisher>();
             _dao = A.Fake<ITlsRptApiDao>();
             _config = A.Fake<ITlsRptApiConfig>();
-            _tlsRptService = new TlsRptService(_messagePublisher, _dao, _config);
+            _log = A.Fake<ILogger<ITlsRptService>>();
+            _tlsRptService = new TlsRptService(_messagePublisher, _dao, _config, _log);
         }
 
         [Test]

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
+using MailCheck.Common.Contracts.Messaging;
 using MailCheck.Common.Messaging.Abstractions;
 using MailCheck.Common.Messaging.Common.Exception;
 using MailCheck.TlsRpt.Contracts.Entity;
 using MailCheck.TlsRpt.Contracts.Evaluator;
-using MailCheck.TlsRpt.Contracts.External;
 using MailCheck.TlsRpt.Contracts.Scheduler;
 using MailCheck.TlsRpt.Contracts.SharedDomain;
 using MailCheck.TlsRpt.Entity.Config;
@@ -41,28 +41,45 @@ namespace MailCheck.TlsRpt.Entity.Entity
 
         public async Task Handle(DomainCreated message)
         {
-            string messageId = message.Id.ToLower();
+            string domain = message.Id.ToLower();
 
-            TlsRptEntityState state = await _dao.Get(messageId);
+            TlsRptEntityState state = await _dao.Get(domain);
 
             if (state != null)
             {
-                _log.LogError("Ignoring {EventName} as TlsRptEntity already exists for {Id}.", nameof(DomainCreated), messageId);
-                throw new MailCheckException($"Cannot handle event {nameof(DomainCreated)} as TlsRptEntity already exists for {messageId}.");
+                _log.LogInformation($"Ignoring {nameof(DomainCreated)} as TlsRptEntity already exists for {domain}.");
+            }
+            else
+            {
+                state = new TlsRptEntityState(domain, 1, TlsRptState.Created, DateTime.UtcNow);
+                await _dao.Save(state);
+                _log.LogInformation($"Created TlsRptEntity for {domain}.");
             }
             
-            state = new TlsRptEntityState(messageId, 1, TlsRptState.Created, DateTime.UtcNow);
-            await _dao.Save(state);
-            TlsRptEntityCreated tlsRptEntityCreated = new TlsRptEntityCreated(messageId, state.Version);
+            TlsRptEntityCreated tlsRptEntityCreated = new TlsRptEntityCreated(domain, state.Version);
             _dispatcher.Dispatch(tlsRptEntityCreated, _tlsRptEntityConfig.SnsTopicArn);
-            _log.LogInformation("Created TlsRptEntity for {Id}.", messageId);
+            _log.LogInformation($"Dispatched {nameof(TlsRptEntityCreated)}Created TlsRptEntity for {domain}.");
+        }
+
+        public async Task Handle(DomainDeleted message)
+        {
+            string domain = message.Id.ToLower();
+            int rows = await _dao.Delete(domain);
+            if (rows == 1)
+            {
+                _log.LogInformation($"Deleted TLS-RPT entity with id: {domain}.");
+            }
+            else
+            {
+                _log.LogInformation($"TLS-RPT entity already deleted with id: {domain}.");
+            }
         }
 
         public async Task Handle(TlsRptRecordExpired message)
         {
-            string messageId = message.Id.ToLower();
+            string domain = message.Id.ToLower();
 
-            TlsRptEntityState state = await LoadState(messageId, nameof(message));
+            TlsRptEntityState state = await LoadState(domain, nameof(message));
 
             Message updatePollPending = state.UpdatePollPending();
 
@@ -75,9 +92,9 @@ namespace MailCheck.TlsRpt.Entity.Entity
 
         public async Task Handle(TlsRptRecordsEvaluated message)
         {
-            string messageId = message.Id.ToLower();
+            string domain = message.Id.ToLower();
 
-            TlsRptEntityState state = await LoadState(messageId, nameof(message));
+            TlsRptEntityState state = await LoadState(domain, nameof(message));
 
             _changeNotifiersComposite.Handle(state, message);
 
@@ -104,12 +121,6 @@ namespace MailCheck.TlsRpt.Entity.Entity
             }
 
             return state;
-        }
-
-        public async Task Handle(DomainDeleted message)
-        {
-            await _dao.Delete(message.Id);
-            _log.LogInformation($"Deleted TLS/RPT entity with id: {message.Id}.");
         }
     }
 }
