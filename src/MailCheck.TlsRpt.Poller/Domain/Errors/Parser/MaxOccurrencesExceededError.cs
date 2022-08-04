@@ -7,7 +7,7 @@ namespace MailCheck.TlsRpt.Poller.Domain.Errors.Parser
         private static readonly Guid _id = Guid.Parse("9f97b9d7-b227-4099-b7a1-cd042fed2707");
 
         public MaxOccurrencesExceededError(string tagKey, int maxOccurrences, int occurrences) 
-            : base(_id, ErrorType.Error, FormatError(tagKey, maxOccurrences, occurrences), null)
+            : base(_id, "mailcheck.tlsrpt.maxOccurencesExceeded", ErrorType.Error, FormatError(tagKey, maxOccurrences, occurrences), null)
         {
             
         }

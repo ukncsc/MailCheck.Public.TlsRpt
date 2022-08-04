@@ -82,7 +82,7 @@ namespace MailCheck.TlsRpt.Evaluator.Rules
 
                 string markdown = string.Format(template, suggestedRecord);
 
-                return new Message(Guid.Parse("85DB50C5-E3DA-479A-A9CE-1B07C81C3747"), "MessageSources.TlsRptEvaluator", MessageType.error, string.Format(
+                return new Message(Guid.Parse("85DB50C5-E3DA-479A-A9CE-1B07C81C3747"), "mailcheck.tlsrpt.ruaTagShouldNotHaveMisconfiguredMailCheckMailbox", "MessageSources.TlsRptEvaluator", MessageType.error, string.Format(
                         TlsRptRulesResource.RuaTagShouldNotHaveMisconfiguredMailCheckMailboxErrorMessage,
                         _tlsRptMailboxAddress,
                         _tlsRptMailbox.OriginalString), markdown
@@ -102,7 +102,7 @@ namespace MailCheck.TlsRpt.Evaluator.Rules
                     tlsRptRecord = $"{tlsRptRecord}rua={TlsRptRulesResource.RuaMailbox};";
                 }
 
-                return new Message(Guid.Parse("045C9D62-8771-4D8F-B981-EAC70C7B74A2"), MessageSources.TlsRptEvaluator, MessageType.info, string.Format(TlsRptRulesResource.RuaTagsShouldContainTlsRptServiceMailBoxErrorMessage,
+                return new Message(Guid.Parse("045C9D62-8771-4D8F-B981-EAC70C7B74A2"), "mailcheck.tlsrpt.ruaTagsShouldContainTlsRptServiceMailBox", MessageSources.TlsRptEvaluator, MessageType.info, string.Format(TlsRptRulesResource.RuaTagsShouldContainTlsRptServiceMailBoxErrorMessage,
                         _tlsRptMailboxAddress,
                         _tlsRptMailbox.OriginalString),
                     string.Format(TlsRptRulesMarkDownResource.RuaTagsShouldContainTlsRptServiceMailBoxErrorMessage, tlsRptRecord));
@@ -111,7 +111,7 @@ namespace MailCheck.TlsRpt.Evaluator.Rules
 
             if (reportUris.GroupBy(_ => _.OriginalString).Any(_ => _.Count() > 1))
             {
-                return new Message(Guid.Parse("354DDFCE-B9DE-4C3B-93BD-A120408ED94A"), MessageSources.TlsRptEvaluator, MessageType.warning,
+                return new Message(Guid.Parse("354DDFCE-B9DE-4C3B-93BD-A120408ED94A"), "mailcheck.tlsrpt.ruaTagShouldNotContainDuplicatedUris", MessageSources.TlsRptEvaluator, MessageType.warning,
                     TlsRptRulesResource.RuaTagShouldNotContainDuplicateUrisErrorMessage, string.Empty);
             }
 

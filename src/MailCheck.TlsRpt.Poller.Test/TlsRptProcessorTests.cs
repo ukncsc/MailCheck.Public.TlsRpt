@@ -98,7 +98,7 @@ namespace MailCheck.TlsRpt.Poller.Test
             Guid errorId = Guid.NewGuid();
             
             TlsRptRecordInfos tlsRptRecordInfos = new TlsRptRecordInfos(domain,
-                new Error(errorId, ErrorType.Error, "error", ""), 1, "nameserver", "auditTrail");
+                new Error(errorId, "mailcheck.tlsrpt.testName", ErrorType.Error, "error", ""), 1, "nameserver", "auditTrail");
 
             A.CallTo(() => _dnsClient.GetTlsRptRecords(domain))
                 .Returns(Task.FromResult(tlsRptRecordInfos));

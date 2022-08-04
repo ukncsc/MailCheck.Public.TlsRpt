@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="NoTlsRptError" xml:space="preserve">
-    <value>No TLS-RPT record configured.</value>
+    <value>No TLS-RPT record configured. This will help diagnose problems with your email encryption.</value>
   </data>
   <data name="OnlyOneTlsRptRecordError" xml:space="preserve">
     <value>A domain should have only 1 TLS-RPT record.</value>

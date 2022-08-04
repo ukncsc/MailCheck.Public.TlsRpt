@@ -34,17 +34,4 @@ namespace MailCheck.TlsRpt.Api
             return isDevMode;
         }
     }
-
-    public static class ServiceCollectionExtensions
-    {
-        public static IServiceCollection AddLogging(this IServiceCollection services)
-        {
-            Log.Logger = new LoggerConfiguration()
-                .WriteTo.Console(new RenderedJsonFormatter())
-                .CreateLogger();
-
-            return services
-                .AddLogging(_ => _.AddSerilog());
-        }
-    }
 }

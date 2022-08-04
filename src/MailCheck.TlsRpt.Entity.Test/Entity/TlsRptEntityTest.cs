@@ -92,14 +92,14 @@ namespace MailCheck.TlsRpt.Entity.Test.Entity
 
             TlsRptEntityState entityState = CreateTlsRptEntityState();
 
-            entityState.Messages.Add(new Message(Guid.NewGuid(), MessageSources.TlsRptEvaluator, MessageType.error,
+            entityState.Messages.Add(new Message(Guid.NewGuid(), "mailcheck.tlsrpt.testName", MessageSources.TlsRptEvaluator, MessageType.error,
                 "EvaluationError", string.Empty));
             entityState.TlsRptRecords.Records[0].Tags[0].Explanation = "Explanation";
 
             TlsRptRecordsEvaluated recordsEvaluated = new TlsRptRecordsEvaluated(Id, entityState.TlsRptRecords,
                 new List<Message>
                 {
-                    new Message(Guid.NewGuid(), MessageSources.TlsRptEvaluator, MessageType.error, "EvaluationError",
+                    new Message(Guid.NewGuid(), "mailcheck.tlsrpt.testName", MessageSources.TlsRptEvaluator, MessageType.error, "EvaluationError",
                         string.Empty)
                 }, DateTime.MinValue);
 

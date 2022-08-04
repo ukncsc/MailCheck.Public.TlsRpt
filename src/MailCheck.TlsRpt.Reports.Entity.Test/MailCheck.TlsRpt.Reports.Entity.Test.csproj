@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FakeItEasy" Version="5.1.0" />
+    <PackageReference Include="MailCheck.Common.Contracts" Version="12.0.0" />
+    <PackageReference Include="MailCheck.Common.TestSupport" Version="12.0.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.13.0" />
+    <PackageReference Include="NUnit" Version="3.11.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MailCheck.TlsRpt.Reports.Entity\MailCheck.TlsRpt.Reports.Entity.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Entity\EvaluationRules\" />
+    <Folder Include="Entity\Notifiers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Dao\" />
+  </ItemGroup>
+</Project>

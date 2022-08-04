@@ -7,7 +7,7 @@ namespace MailCheck.TlsRpt.Poller.Domain.Errors.Rules
         private static readonly Guid _Id = Guid.Parse("aba954bc-42ce-4cfd-ab37-ccd637c7d6d3");
 
         public RuaTagShouldNotHaveMoreThanOneUriError(int uriCount)
-            : base(_Id, ErrorType.Info, FormatError(uriCount), FormatMarkDown(uriCount))
+            : base(_Id, "mailcheck.tlsrpt.ruaTagShouldNotHaveMoreThanOneUri", ErrorType.Info, FormatError(uriCount), FormatMarkDown(uriCount))
         {
         }
 

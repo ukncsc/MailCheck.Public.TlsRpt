@@ -4,8 +4,8 @@ namespace MailCheck.TlsRpt.Poller.Domain.Errors.Parser
 {
     public class InvalidItemValueError : Error
     {
-        public InvalidItemValueError(Guid id, string itemKey, string itemValue)
-            : base(id, ErrorType.Error, FormatString(itemKey, itemValue), null)
+        public InvalidItemValueError(Guid id, string name, string itemKey, string itemValue)
+            : base(id, name, ErrorType.Error, FormatString(itemKey, itemValue), null)
         {
         }
 

@@ -34,7 +34,7 @@ namespace MailCheck.TlsRpt.Reports.Api.Test.Service.Integration
             ReportsApiDao reportsApiDao = new ReportsApiDao(_config, _logger, _clock, new MongoClientProvider(_config, Runner.ConnectionString));
             _service = new ReportService(reportsApiDao, _clock);
         }
-        
+
         [Test]
         public async Task GetSummaryBodyGroupsByProviderAndType()
         {

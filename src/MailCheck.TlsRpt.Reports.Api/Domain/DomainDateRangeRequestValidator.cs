@@ -2,7 +2,7 @@
 using FluentValidation;
 using MailCheck.Common.Util;
 
-namespace MailCheck.TlsRpt.Reports.Api.Controllers
+namespace MailCheck.TlsRpt.Reports.Api.Domain
 {
     public class DomainDateRangeRequestValidator : AbstractValidator<DomainDateRangeRequest>
     {

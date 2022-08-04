@@ -5,6 +5,7 @@ using MailCheck.Common.Api.Authorisation.Filter;
 using MailCheck.Common.Api.Authorisation.Service.Domain;
 using MailCheck.Common.Api.Domain;
 using MailCheck.TlsRpt.Reports.Api.Dao;
+using MailCheck.TlsRpt.Reports.Api.Domain;
 using MailCheck.TlsRpt.Reports.Api.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
@@ -27,7 +28,7 @@ namespace MailCheck.TlsRpt.Reports.Api.Controllers
         public async Task<IActionResult> GetSummaryTitle(string domain)
         {
             List<TitleResult> reportSummaryTitle = await _tlsRptService.GetSummaryTitle(domain);
-            
+
             return Ok(reportSummaryTitle);
         }
 

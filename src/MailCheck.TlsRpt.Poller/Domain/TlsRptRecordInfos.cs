@@ -19,6 +19,11 @@ namespace MailCheck.TlsRpt.Poller.Domain
         {
         }
 
+        public TlsRptRecordInfos(string domain, List<TlsRptRecordInfo> recordsInfos, int messageSize, string nameServer)
+            : this(domain, recordsInfos, messageSize, null, nameServer, null)
+        {
+        }
+
         public TlsRptRecordInfos(string domain, List<TlsRptRecordInfo> recordsInfos, int messageSize)
             : this(domain, recordsInfos, messageSize, null, null, null)
         {

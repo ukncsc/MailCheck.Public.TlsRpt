@@ -3,7 +3,7 @@
     public class MalformedUri : Uri
     {
         public MalformedUri(string value) 
-            : base(nameof(MalformedTag), value)
+            : base(nameof(MalformedUri), value)
         {
         }
     }

@@ -3,7 +3,7 @@
     public class UnknownUri : Uri
     {
         public UnknownUri(string value) 
-            : base(nameof(UnknownTag), value)
+            : base(nameof(UnknownUri), value)
         {
         }
     }

@@ -3,8 +3,10 @@ using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices;
 using DnsClient;
+using MailCheck.Common.Util;
 using MailCheck.TlsRpt.Poller.Config;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace MailCheck.TlsRpt.Poller.StartUp
 {
@@ -17,7 +19,7 @@ namespace MailCheck.TlsRpt.Poller.StartUp
 
         private static ILookupClient CreateLookupClient(IServiceProvider provider)
         {
-            return RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+            LookupClient lookupClient = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
                 ? new LookupClient(NameServer.GooglePublicDns, NameServer.GooglePublicDnsIPv6)
                 {
                     Timeout = provider.GetRequiredService<ITlsRptPollerConfig>().DnsRecordLookupTimeout
@@ -27,11 +29,15 @@ namespace MailCheck.TlsRpt.Poller.StartUp
                     .Select(_ => new IPEndPoint(_, 53)).ToArray())
                 {
                     ContinueOnEmptyResponse = false,
+                    ContinueOnDnsError = false,
                     UseCache = false,
+                    Retries = 0,
                     UseTcpOnly = true,
                     EnableAuditTrail = true,
                     Timeout = provider.GetRequiredService<ITlsRptPollerConfig>().DnsRecordLookupTimeout
                 });
+
+            return new AuditTrailLoggingLookupClientWrapper(lookupClient, provider.GetService<IAuditTrailParser>(), provider.GetService<ILogger<AuditTrailLoggingLookupClientWrapper>>());
         }
     }
 }

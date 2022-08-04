@@ -43,11 +43,24 @@ namespace MailCheck.TlsRpt.Reports.Processor.Dao
             MongoClientSettings settings = MongoClientSettings.FromUrl(new MongoUrl(connectionString));
             settings.AllowInsecureTls = true;
             settings.UseTls = true;
+            settings.ReadPreference = ReadPreference.SecondaryPreferred;
+            settings.ReplicaSetName = "rs0";
 
             MongoClient client = new MongoClient(settings);
 
             IMongoDatabase database = client.GetDatabase(_config.Database);
             IMongoCollection<BsonDocument> collection = database.GetCollection<BsonDocument>(CollectionName);
+
+            var indexKeys = new BsonDocument
+            {
+                ["TlsReportDomain "] = 1,
+                ["Report.DateRange.EndDatetime"] = 1,
+            };
+            BsonDocumentIndexKeysDefinition<BsonDocument> keysDefinition = new BsonDocumentIndexKeysDefinition<BsonDocument>(indexKeys);
+            await collection.Indexes.CreateOneAsync(new CreateIndexModel<BsonDocument>(
+                keysDefinition, 
+                new CreateIndexOptions { Unique = false, Background = true, }
+            ));
 
             DefaultContractResolver contractResolver = new DefaultContractResolver
             {

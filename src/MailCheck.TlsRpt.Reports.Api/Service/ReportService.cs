@@ -31,37 +31,37 @@ namespace MailCheck.TlsRpt.Reports.Api.Service
             List<ProviderTotals> providerTotals = await _dao.GetTotals(requestDomain, 90);
 
             IEnumerable<TitleResult> titleResults = new List<int> { 2, 14, 90 }.Select(period =>
-              {
-                  DateTime periodStart = _clock.GetDateTimeUtc().Date.AddDays(-period);
-                  List<ProviderTotals> periodTotals = providerTotals
-                      .Where(y => y.ReportEndDate > periodStart).ToList();
+            {
+                DateTime periodStart = _clock.GetDateTimeUtc().Date.AddDays(-period);
+                List<ProviderTotals> periodTotals = providerTotals
+                    .Where(y => y.ReportEndDate > periodStart).ToList();
 
-                  if (periodTotals.Count == 0)
-                  {
-                      return null;
-                  }
+                if (periodTotals.Count == 0)
+                {
+                    return null;
+                }
 
-                  int totalFailures = periodTotals.Sum(y => y.TotalFailureSessionCount);
-                  int totalSessions = periodTotals.Sum(y => y.TotalSuccessfulSessionCount) + totalFailures;
+                int totalFailures = periodTotals.Sum(y => y.TotalFailureSessionCount);
+                int totalSessions = periodTotals.Sum(y => y.TotalSuccessfulSessionCount) + totalFailures;
 
-                  double percentageFailures;
-                  if (totalSessions == 0 || totalFailures == 0)
-                  {
-                      percentageFailures = 0;
-                  }
-                  else
-                  {
-                      percentageFailures = Math.Round((double)totalFailures / totalSessions * 100, 2);
-                  }
+                double percentageFailures;
+                if (totalSessions == 0 || totalFailures == 0)
+                {
+                    percentageFailures = 0;
+                }
+                else
+                {
+                    percentageFailures = Math.Round((double)totalFailures / totalSessions * 100, 2);
+                }
 
-                  return new TitleResult
-                  {
-                      Period = period,
-                      ProviderCount = periodTotals.Where(x => x.TotalFailureSessionCount > 0).GroupBy(y => y.Provider).Count(),
-                  
-                      PercentageFailures = percentageFailures
-                  };
-              });
+                return new TitleResult
+                {
+                    Period = period,
+                    ProviderCount = periodTotals.Where(x => x.TotalFailureSessionCount > 0).GroupBy(y => y.Provider).Count(),
+
+                    PercentageFailures = percentageFailures
+                };
+            });
 
             return titleResults.Where(x => x != null).ToList();
         }

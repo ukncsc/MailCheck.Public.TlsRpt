@@ -7,7 +7,7 @@ namespace MailCheck.TlsRpt.Poller.Domain.Errors.Parser
         private static readonly Guid _id = Guid.Parse("f5ab36d2-0bf0-4036-81c7-e69b25dd44c6");
 
         public UnknownTagError(string tagKey, string tagValue) 
-            : base(_id, "tag", tagKey, tagValue)
+            : base(_id, "mailcheck.tlsrpt.unknownTag", "tag", tagKey, tagValue)
         {
           
         }

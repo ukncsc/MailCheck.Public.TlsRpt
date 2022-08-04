@@ -40,7 +40,7 @@ namespace MailCheck.TlsRpt.Poller
 
             if (tlsRptRecordInfos.HasError)
             {
-                string message = $"Failed TLS/RPT record query for {domain} with error {tlsRptRecordInfos.Error}";
+                string message = $"Failed TLS/RPT record query for {domain} with error {tlsRptRecordInfos.Error?.Message}";
 
                 _log.LogError($"{message} {Environment.NewLine} Audit Trail: {tlsRptRecordInfos.AuditTrail}");
 

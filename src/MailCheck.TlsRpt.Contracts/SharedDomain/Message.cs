@@ -4,9 +4,10 @@ namespace MailCheck.TlsRpt.Contracts.SharedDomain
 {
     public class Message : IEquatable<Message>
     {
-        public Message(Guid id, string source, MessageType messageType, string text, string markDown, MessageDisplay messageDisplay = MessageDisplay.Standard)
+        public Message(Guid id, string name, string source, MessageType messageType, string text, string markDown, MessageDisplay messageDisplay = MessageDisplay.Standard)
         {
             Id = id;
+            Name = name;
             Source = source;
             MessageType = messageType;
             Text = text;
@@ -15,6 +16,7 @@ namespace MailCheck.TlsRpt.Contracts.SharedDomain
         }
 
         public Guid Id { get; }
+        public string Name { get; }
         public string Source { get; }
 
         public MessageType MessageType { get; }

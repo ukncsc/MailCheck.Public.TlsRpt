@@ -107,5 +107,28 @@ namespace MailCheck.TlsRpt.Reports.Processor.Test
 
             A.CallTo(() => _dao.Persist(A<ReportInfo>._)).MustNotHaveHappened();
         }
+
+        [Test]
+        public async Task ProcessIgnoresBadSubmitters()
+        {
+            SQSEvent sqsEvent = new SQSEvent();
+            string requestId = "testRequestId";
+            S3SourceInfo s3SourceInfoFromFactory = new S3SourceInfo(null, null, 0, null, null);
+
+            A.CallTo(() => _s3SourceInfoFactory.Create(sqsEvent, requestId)).Returns(new List<S3SourceInfo> { s3SourceInfoFromFactory });
+            A.CallTo(() => _config.MaxS3ObjectSizeKilobytes).Returns(2);
+
+            byte[] emailStream = new byte[1024];
+            S3Object s3ObjectFromS3 = new S3Object(emailStream);
+            A.CallTo(() => _client.GetS3Object(s3SourceInfoFromFactory)).Returns(s3ObjectFromS3);
+
+            TlsRptEmail tlsRptEmailFromParser = new TlsRptEmail {TlsReportSubmitter = "SockEtLabs"};
+            A.CallTo(() => _emailBodyParser.Parse(emailStream)).Returns(tlsRptEmailFromParser);
+
+            await _reportProcessor.Process(sqsEvent, requestId);
+
+            A.CallTo(() => _parser.Parse(A<TlsRptEmail>._, A<string>._)).MustNotHaveHappened();
+            A.CallTo(() => _dao.Persist(A<ReportInfo>._)).MustNotHaveHappened();
+        }
     }
 }

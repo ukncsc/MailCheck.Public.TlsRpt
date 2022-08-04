@@ -40,11 +40,13 @@ namespace MailCheck.TlsRpt.Scheduler.Processor
 
             if (expiredRecords.Any())
             {
-                expiredRecords
-                    .Select(_ => _publisher.Publish(_.ToTlsRptRecordExpiredMessage(), _config.PublisherConnectionString))
-                    .Batch(10)
-                    .ToList()
-                    .ForEach(async _ => await Task.WhenAll(_));
+                var publishTaskGenerator = expiredRecords
+                    .Select(_ => _publisher.Publish(_.ToTlsRptRecordExpiredMessage(), _config.PublisherConnectionString));
+
+                foreach (var batch in publishTaskGenerator.Batch(10))
+                {
+                    await Task.WhenAll(batch);
+                }
 
                 await _dao.UpdateLastChecked(expiredRecords);
 

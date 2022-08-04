@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Amazon.Lambda.Core" Version="2.0.0" />
+    <PackageReference Include="Amazon.Lambda.Serialization.Json" Version="2.0.0" />
+    <PackageReference Include="MailCheck.Common.Contracts" Version="12.0.0" />
+    <PackageReference Include="MailCheck.Common.Data" Version="12.0.0" />
+    <PackageReference Include="MailCheck.Common.Messaging" Version="12.0.0" />
+    <PackageReference Include="MailCheck.Common.Util" Version="12.0.0" />
+    <PackageReference Include="MailCheck.Common.SSM" Version="12.0.0" />
+    <PackageReference Include="MailCheck.Common.Processors" Version="12.0.0" />
+    <PackageReference Include="Microsoft.Extensions.CommandLineUtils" Version="1.1.1" />
+    <PackageReference Include="MongoDB.Bson" Version="2.11.6" />
+    <PackageReference Include="MongoDB.Driver" Version="2.11.6" />
+    <PackageReference Include="Newtonsoft.Json.Bson" Version="1.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MailCheck.TlsRpt.Reports.Contracts\MailCheck.TlsRpt.Reports.Contracts.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MailCheck.TlsRpt.Contracts\MailCheck.TlsRpt.Contracts.csproj" />
+  </ItemGroup>
+    
+  <ItemGroup>
+    <Folder Include="Entity\EvaluationRules\" />
+  </ItemGroup>
+</Project>

@@ -39,8 +39,8 @@ namespace MailCheck.TlsRpt.Entity.Test.Entity.Notifiers
         {
             Guid id = Guid.NewGuid();
 
-            Message existingMessage = new Message(id, "testSource", MessageType.warning, "testText1", string.Empty);
-            Message newMessage = new Message(id, "testSource text has changed!", MessageType.error, "testText2", string.Empty);
+            Message existingMessage = new Message(id, "mailcheck.tlsrpt.testName", "testSource", MessageType.warning, "testText1", string.Empty);
+            Message newMessage = new Message(id, "mailcheck.tlsrpt.testName", "testSource text has changed!", MessageType.error, "testText2", string.Empty);
 
             _advisoryChangedNotifier.Handle(CreateEntityStateWithMessages(existingMessage), CreateTlsRptRecordsEvaluatedWithMessages(newMessage));
 
@@ -55,8 +55,8 @@ namespace MailCheck.TlsRpt.Entity.Test.Entity.Notifiers
         {
             Guid messageId = Guid.NewGuid();
 
-            Message existingMessage = new Message(messageId, "testSource", MessageType.info, "testText", string.Empty);
-            Message newMessage = new Message(messageId, "testSource", MessageType.info, "testText", string.Empty);
+            Message existingMessage = new Message(messageId, "mailcheck.tlsrpt.testName", "testSource", MessageType.info, "testText", string.Empty);
+            Message newMessage = new Message(messageId, "mailcheck.tlsrpt.testName", "testSource", MessageType.info, "testText", string.Empty);
 
             _advisoryChangedNotifier.Handle(CreateEntityStateWithMessages(existingMessage), CreateTlsRptRecordsEvaluatedWithMessages(newMessage));
 
@@ -69,8 +69,8 @@ namespace MailCheck.TlsRpt.Entity.Test.Entity.Notifiers
         [Test]
         public void RaisesRemovedAndAddeddWhenMessageTypeChanges()
         {
-            Message existingMessage = new Message(Guid.NewGuid(), "testSource", MessageType.info, "testText", string.Empty);
-            Message newMessage = new Message(Guid.NewGuid(), "testSource", MessageType.error, "testText", string.Empty);
+            Message existingMessage = new Message(Guid.NewGuid(), "mailcheck.tlsrpt.testName", "testSource", MessageType.info, "testText", string.Empty);
+            Message newMessage = new Message(Guid.NewGuid(), "mailcheck.tlsrpt.testName", "testSource", MessageType.error, "testText", string.Empty);
 
             _advisoryChangedNotifier.Handle(CreateEntityStateWithMessages(existingMessage), CreateTlsRptRecordsEvaluatedWithMessages(newMessage));
 
@@ -85,8 +85,8 @@ namespace MailCheck.TlsRpt.Entity.Test.Entity.Notifiers
         [Test]
         public void RaisesRemovedAndAddeddWhenMessageTextChanges()
         {
-            Message existingMessage = new Message(Guid.NewGuid(), "testSource", MessageType.info, "testText1", string.Empty);
-            Message newMessage = new Message(Guid.NewGuid(), "testSource", MessageType.info, "testText2", string.Empty);
+            Message existingMessage = new Message(Guid.NewGuid(), "mailcheck.tlsrpt.testName", "testSource", MessageType.info, "testText1", string.Empty);
+            Message newMessage = new Message(Guid.NewGuid(), "mailcheck.tlsrpt.testName", "testSource", MessageType.info, "testText2", string.Empty);
 
             _advisoryChangedNotifier.Handle(CreateEntityStateWithMessages(existingMessage), CreateTlsRptRecordsEvaluatedWithMessages(newMessage));
 
@@ -101,8 +101,8 @@ namespace MailCheck.TlsRpt.Entity.Test.Entity.Notifiers
         [Test]
         public void RaisesRemovedAndAddeddWhenMessageChanges()
         {
-            Message existingMessage = new Message(Guid.NewGuid(), "testSource", MessageType.info, "testText", string.Empty);
-            Message newMessage = new Message(Guid.NewGuid(), "testSource", MessageType.info, "newTestText", string.Empty);
+            Message existingMessage = new Message(Guid.NewGuid(), "mailcheck.tlsrpt.testName", "testSource", MessageType.info, "testText", string.Empty);
+            Message newMessage = new Message(Guid.NewGuid(), "mailcheck.tlsrpt.testName", "testSource", MessageType.info, "newTestText", string.Empty);
 
             _advisoryChangedNotifier.Handle(CreateEntityStateWithMessages(existingMessage), CreateTlsRptRecordsEvaluatedWithMessages(newMessage));
 
@@ -119,10 +119,10 @@ namespace MailCheck.TlsRpt.Entity.Test.Entity.Notifiers
         {
             Guid messageId = Guid.NewGuid();
 
-            Message existingMessage = new Message(messageId, "testSource1", MessageType.info, "testText1", string.Empty);
+            Message existingMessage = new Message(messageId, "mailcheck.tlsrpt.testName", "testSource1", MessageType.info, "testText1", string.Empty);
 
-            Message newMessage1 = new Message(messageId, "testSource1", MessageType.info, "testText1", string.Empty);
-            Message newMessage2 = new Message(Guid.NewGuid(), "testSource2", MessageType.info, "testText2", string.Empty);
+            Message newMessage1 = new Message(messageId, "mailcheck.tlsrpt.testName", "testSource1", MessageType.info, "testText1", string.Empty);
+            Message newMessage2 = new Message(Guid.NewGuid(), "mailcheck.tlsrpt.testName", "testSource2", MessageType.info, "testText2", string.Empty);
 
             _advisoryChangedNotifier.Handle(CreateEntityStateWithMessages(existingMessage), CreateTlsRptRecordsEvaluatedWithMessages(newMessage1, newMessage2));
 
@@ -138,10 +138,10 @@ namespace MailCheck.TlsRpt.Entity.Test.Entity.Notifiers
         {
             Guid messageId = Guid.NewGuid();
 
-            Message existingMessage1 = new Message(messageId, "testSource1", MessageType.info, "testText1", string.Empty);
-            Message existingMessage2 = new Message(Guid.NewGuid(), "testSource2", MessageType.info, "testText2", string.Empty);
+            Message existingMessage1 = new Message(messageId, "mailcheck.tlsrpt.testName", "testSource1", MessageType.info, "testText1", string.Empty);
+            Message existingMessage2 = new Message(Guid.NewGuid(), "mailcheck.tlsrpt.testName", "testSource2", MessageType.info, "testText2", string.Empty);
 
-            Message newMessage = new Message(messageId, "testSource1", MessageType.info, "testText1", string.Empty);
+            Message newMessage = new Message(messageId, "mailcheck.tlsrpt.testName", "testSource1", MessageType.info, "testText1", string.Empty);
 
             _advisoryChangedNotifier.Handle(CreateEntityStateWithMessages(existingMessage1, existingMessage2), CreateTlsRptRecordsEvaluatedWithMessages(newMessage));
 
@@ -156,8 +156,8 @@ namespace MailCheck.TlsRpt.Entity.Test.Entity.Notifiers
         [Test]
         public void RaisesAddedAndRemovedWhenMessageChanges()
         {
-            Message existingMessage = new Message(Guid.NewGuid(), "testSource", MessageType.info, "testText", string.Empty);
-            Message newMessage = new Message(Guid.NewGuid(), "testSource", MessageType.error, "testText", string.Empty);
+            Message existingMessage = new Message(Guid.NewGuid(), "mailcheck.tlsrpt.testName", "testSource", MessageType.info, "testText", string.Empty);
+            Message newMessage = new Message(Guid.NewGuid(), "mailcheck.tlsrpt.testName", "testSource", MessageType.error, "testText", string.Empty);
 
             _advisoryChangedNotifier.Handle(CreateEntityStateWithRecords(existingMessage), CreateTlsRptRecordsEvaluatedWithRecords(newMessage));
 
@@ -171,8 +171,8 @@ namespace MailCheck.TlsRpt.Entity.Test.Entity.Notifiers
         [Test]
         public void RaisesAddedWhenMessageChanges()
         {
-            Message existingMessage = new Message(Guid.NewGuid(), "testSource", MessageType.info, "testText1", string.Empty);
-            Message newMessage = new Message(Guid.NewGuid(), "testSource", MessageType.info, "testText2", string.Empty);
+            Message existingMessage = new Message(Guid.NewGuid(), "mailcheck.tlsrpt.testName", "testSource", MessageType.info, "testText1", string.Empty);
+            Message newMessage = new Message(Guid.NewGuid(), "mailcheck.tlsrpt.testName", "testSource", MessageType.info, "testText2", string.Empty);
 
             _advisoryChangedNotifier.Handle(CreateEntityStateWithRecords(existingMessage), CreateTlsRptRecordsEvaluatedWithRecords(newMessage));
 
@@ -186,8 +186,8 @@ namespace MailCheck.TlsRpt.Entity.Test.Entity.Notifiers
         [Test]
         public void RaisesAddedWhenMessageDisplayTypeChanges()
         {
-            Message existingMessage = new Message(Guid.NewGuid(), "testSource", MessageType.info, "testText", string.Empty, MessageDisplay.Prompt);
-            Message newMessage = new Message(Guid.NewGuid(), "testSource", MessageType.info, "testText", string.Empty);
+            Message existingMessage = new Message(Guid.NewGuid(), "mailcheck.tlsrpt.testName", "testSource", MessageType.info, "testText", string.Empty, MessageDisplay.Prompt);
+            Message newMessage = new Message(Guid.NewGuid(), "mailcheck.tlsrpt.testName", "testSource", MessageType.info, "testText", string.Empty);
 
             _advisoryChangedNotifier.Handle(CreateEntityStateWithRecords(existingMessage), CreateTlsRptRecordsEvaluatedWithRecords(newMessage));
 
@@ -202,10 +202,10 @@ namespace MailCheck.TlsRpt.Entity.Test.Entity.Notifiers
         {
             Guid messageId = Guid.NewGuid();
 
-            Message existingMessage = new Message(messageId,"testSource1", MessageType.info, "testText1", string.Empty);
+            Message existingMessage = new Message(messageId,"mailcheck.tlsrpt.testName", "testSource1", MessageType.info, "testText1", string.Empty);
 
-            Message newMessage1 = new Message(messageId,"testSource1", MessageType.info, "testText1", string.Empty);
-            Message newMessage2 = new Message(Guid.NewGuid(),"testSource2", MessageType.info, "testText2", string.Empty);
+            Message newMessage1 = new Message(messageId, "mailcheck.tlsrpt.testName", "testSource1", MessageType.info, "testText1", string.Empty);
+            Message newMessage2 = new Message(Guid.NewGuid(), "mailcheck.tlsrpt.testName", "testSource2", MessageType.info, "testText2", string.Empty);
 
             _advisoryChangedNotifier.Handle(CreateEntityStateWithRecords(existingMessage), CreateTlsRptRecordsEvaluatedWithRecords(newMessage1, newMessage2));
 
@@ -220,10 +220,10 @@ namespace MailCheck.TlsRpt.Entity.Test.Entity.Notifiers
         {
             Guid messageId = Guid.NewGuid();
 
-            Message existingMessage1 = new Message(messageId,"testSource1", MessageType.info, "testText1", string.Empty);
-            Message existingMessage2 = new Message(Guid.NewGuid(),"testSource2", MessageType.info, "testText2", string.Empty);
+            Message existingMessage1 = new Message(messageId, "mailcheck.tlsrpt.testName", "testSource1", MessageType.info, "testText1", string.Empty);
+            Message existingMessage2 = new Message(Guid.NewGuid(),"mailcheck.tlsrpt.testName", "testSource2", MessageType.info, "testText2", string.Empty);
 
-            Message newMessage = new Message(messageId,"testSource1", MessageType.info, "testText1", string.Empty);
+            Message newMessage = new Message(messageId, "mailcheck.tlsrpt.testName", "testSource1", MessageType.info, "testText1", string.Empty);
 
             _advisoryChangedNotifier.Handle(CreateEntityStateWithRecords( existingMessage1, existingMessage2), CreateTlsRptRecordsEvaluatedWithRecords(newMessage));
 

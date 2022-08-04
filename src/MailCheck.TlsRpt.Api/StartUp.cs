@@ -10,6 +10,7 @@ using MailCheck.Common.Api.Middleware;
 using MailCheck.Common.Api.Middleware.Audit;
 using MailCheck.Common.Data.Abstractions;
 using MailCheck.Common.Data.Implementations;
+using MailCheck.Common.Logging;
 using MailCheck.Common.Messaging.Abstractions;
 using MailCheck.Common.Messaging.Sns;
 using MailCheck.Common.SSM;
@@ -66,15 +67,15 @@ namespace MailCheck.TlsRpt.Api
                 .AddTransient<ITlsRptService, TlsRptService>()
                 .AddAudit("Tls-Rpt-Api")
                 .AddMailCheckAuthenticationClaimsPrincipleClient()
-                .AddLogging()
-                .AddMvc(config =>
+                .AddSerilogLogging()
+                .AddControllers(config =>
                 {
                     AuthorizationPolicy policy = new AuthorizationPolicyBuilder()
                         .RequireAuthenticatedUser()
                         .Build();
                     config.Filters.Add(new AuthorizeFilter(policy));
-                })
-                .AddJsonOptions(options =>
+                }).SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0)
+                .AddNewtonsoftJson(options =>
                 {
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Serialize;
                     options.SerializerSettings.Converters.Add(new StringEnumConverter());
@@ -87,7 +88,7 @@ namespace MailCheck.TlsRpt.Api
                 .AddMailCheckClaimsAuthentication();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (RunInDevMode())
             {
@@ -100,7 +101,11 @@ namespace MailCheck.TlsRpt.Api
                .UseAuthentication()
                .UseMiddleware<AuditLoggingMiddleware>()
                .UseMiddleware<UnhandledExceptionMiddleware>()
-               .UseMvc();
+               .UseRouting()
+               .UseEndpoints(endpoints => {
+                   endpoints.MapDefaultControllerRoute();
+                   endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+               });
         }
 
         private bool RunInDevMode()
@@ -113,7 +118,7 @@ namespace MailCheck.TlsRpt.Api
         {
             options.AddPolicy(CorsPolicyName, builder =>
                 builder
-                    .AllowAnyOrigin()
+                    .SetIsOriginAllowed(_ => true)
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials());

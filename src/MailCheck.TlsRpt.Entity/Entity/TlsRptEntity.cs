@@ -15,7 +15,7 @@ using Message = MailCheck.Common.Messaging.Abstractions.Message;
 
 namespace MailCheck.TlsRpt.Entity.Entity
 {
-    public class TlsRptEntity:
+    public class TlsRptEntity :
         IHandle<DomainCreated>,
         IHandle<TlsRptRecordExpired>,
         IHandle<TlsRptRecordsEvaluated>,

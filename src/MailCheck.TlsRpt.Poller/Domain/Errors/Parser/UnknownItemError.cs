@@ -4,8 +4,8 @@ namespace MailCheck.TlsRpt.Poller.Domain.Errors.Parser
 {
     public class UnknownItemError : Error
     {
-        public UnknownItemError(Guid id, string itemType, string itemKey, string itemValue, string markdown = null)
-            : base(id, ErrorType.Error, FormatError(itemType, itemKey, itemValue), markdown)
+        public UnknownItemError(Guid id, string name, string itemType, string itemKey, string itemValue, string markdown = null)
+            : base(id, name, ErrorType.Error, FormatError(itemType, itemKey, itemValue), markdown)
         {
             
         }

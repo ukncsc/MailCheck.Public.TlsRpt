@@ -44,8 +44,8 @@ namespace MailCheck.TlsRpt.Reports.Api.Dao
             IMongoCollection<ReportInfo> collection = await GetCollection();
 
             IMongoQueryable<ReportInfo> filteredReportInfos = collection.AsQueryable()
-                .Where(x => x.TlsReportDomain == domain && 
-                            x.Report.DateRange.EndDatetime > _clock.GetDateTimeUtc().Date.AddDays(periodInDays * -1)&&
+                .Where(x => x.TlsReportDomain == domain &&
+                            x.Report.DateRange.EndDatetime > _clock.GetDateTimeUtc().Date.AddDays(periodInDays * -1) &&
                             x.Report.DateRange.EndDatetime < _clock.GetDateTimeUtc().Date);
 
             var providerConnections = filteredReportInfos.SelectMany(reportInfo => reportInfo.Report.Policies, (reportInfo, policySummary) => new
@@ -141,7 +141,7 @@ namespace MailCheck.TlsRpt.Reports.Api.Dao
             IMongoCollection<ReportInfo> collection = await GetCollection();
 
             IMongoQueryable<ReportInfo> filteredReportInfos = collection.AsQueryable()
-                .Where(x => x.TlsReportDomain == domain && 
+                .Where(x => x.TlsReportDomain == domain &&
                             x.Report.DateRange.EndDatetime > _clock.GetDateTimeUtc().Date.AddDays(periodInDays * -1) &&
                             x.Report.DateRange.EndDatetime < _clock.GetDateTimeUtc().Date);
 

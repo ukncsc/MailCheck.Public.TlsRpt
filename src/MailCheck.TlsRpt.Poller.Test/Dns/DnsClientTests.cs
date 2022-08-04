@@ -57,7 +57,7 @@ namespace MailCheck.TlsRpt.Poller.Test.Dns
         }
 
         [Test]
-        public async Task DoenstReturnErrorForNxDomainResponse()
+        public async Task DoesNotReturnErrorForNxDomainResponse()
         {
             const string error = "Non-Existent Domain";
 
@@ -72,7 +72,7 @@ namespace MailCheck.TlsRpt.Poller.Test.Dns
         }
 
         [Test]
-        public async Task DoesntReturnErrorForServerFailureResponse()
+        public async Task DoesNotReturnErrorForServerFailureResponse()
         {
             const string error = "Server Failure";
 
@@ -87,12 +87,27 @@ namespace MailCheck.TlsRpt.Poller.Test.Dns
         }
 
         [Test]
-        public void ExceptionsArePropagated()
+        public void AllExceptionsAreCaughtAndThrow()
         {
             A.CallTo(() => _lookupClient.QueryAsync(A<string>._, QueryType.TXT, QueryClass.IN, CancellationToken.None))
                 .Throws(new InvalidOperationException());
 
             Assert.ThrowsAsync<InvalidOperationException>(() => _dnsClient.GetTlsRptRecords(String.Empty));
+
+            A.CallTo(() => _lookupClient.QueryAsync(A<string>._, QueryType.TXT, QueryClass.IN, CancellationToken.None))
+                .Throws(new ArgumentNullException());
+
+            Assert.ThrowsAsync<ArgumentNullException>(() => _dnsClient.GetTlsRptRecords(String.Empty));
+
+            A.CallTo(() => _lookupClient.QueryAsync(A<string>._, QueryType.TXT, QueryClass.IN, CancellationToken.None))
+                .Throws(new ArgumentOutOfRangeException());
+
+            Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => _dnsClient.GetTlsRptRecords(String.Empty));
+
+            A.CallTo(() => _lookupClient.QueryAsync(A<string>._, QueryType.TXT, QueryClass.IN, CancellationToken.None))
+                .Throws(new DnsResponseException());
+
+            Assert.ThrowsAsync<DnsResponseException>(() => _dnsClient.GetTlsRptRecords(String.Empty));
         }
 
         private IDnsQueryResponse CreateResponse(params List<string>[] records)

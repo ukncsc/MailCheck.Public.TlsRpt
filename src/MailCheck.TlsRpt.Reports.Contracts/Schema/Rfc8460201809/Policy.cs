@@ -18,6 +18,7 @@ namespace MailCheck.TlsRpt.Reports.Contracts.Schema.Rfc8460201809
         public string PolicyDomain { get; set; }
 
         [JsonProperty("mx-host")]
+        [JsonConverter(typeof(PermissiveStringArrayConverter))]
         public string[] MxHost { get; set; }
     }
 }

@@ -14,7 +14,7 @@ using NUnit.Framework;
 namespace MailCheck.TlsRpt.Reports.Api.Test.Auth
 {
     [TestFixture(Category = "Auth")]
-    public class EndpointAuthTests : BaseIntegrationTest<StartUp, TlsRpt.Reports.Api.Controllers.ReportsSummaryController>
+    public class EndpointAuthTests : BaseIntegrationTest<StartUp, Api.Controllers.ReportsSummaryController>
     {
         private IMailCheckAuthorisationService _mailCheckAuthorisationService;
         private HttpClient _client;

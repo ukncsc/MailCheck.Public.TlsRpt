@@ -2,6 +2,7 @@
 using MailCheck.Common.Environment.Abstractions;
 using MailCheck.Common.Environment.Implementations;
 using MailCheck.Common.Messaging.Abstractions;
+using MailCheck.Common.Util;
 using MailCheck.TlsRpt.Poller.Config;
 using MailCheck.TlsRpt.Poller.Dns;
 using MailCheck.TlsRpt.Poller.Domain;
@@ -39,6 +40,7 @@ namespace MailCheck.TlsRpt.Poller.StartUp
                 .AddTransient<ITlsRptProcessor, TlsRptProcessor>()
                 .AddTransient<IDnsClient, Dns.DnsClient>()
                 .AddTransient<ITlsRptPollerConfig, TlsRptPollerConfig>()
+                .AddTransient<IAuditTrailParser, AuditTrailParser>()
                 .AddSingleton<IDnsNameServerProvider, LinuxDnsNameServerProvider>()
                 .AddTransient<IEnvironmentVariables, EnvironmentVariables>()
                 .AddTransient<IEnvironment, EnvironmentWrapper>()

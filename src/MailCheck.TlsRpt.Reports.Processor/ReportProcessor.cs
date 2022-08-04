@@ -26,6 +26,7 @@ namespace MailCheck.TlsRpt.Reports.Processor
         private readonly IReportParser _reportParser;
         private readonly IS3SourceInfoFactory _s3SourceInfoFactory;
         private readonly IEmailBodyParser _emailBodyParser;
+        private readonly SortedSet<string> _ignoredSubmitters = new SortedSet<string>(StringComparer.InvariantCultureIgnoreCase) {"SocketLabs"};
 
         public ReportProcessor(ILogger<ReportProcessor> logger, IS3Client client, IConfig config, IReportParser reportParser, ITlsRptDao dao, IS3SourceInfoFactory s3SourceInfoFactory, IEmailBodyParser emailBodyParser)
         {
@@ -57,13 +58,13 @@ namespace MailCheck.TlsRpt.Reports.Processor
                 ["S3ObjectPath"] = uri
             }))
             {
-                _logger.LogDebug($"Processing report in s3 object {uri}, " + identifier);
+                _logger.LogInformation($"Processing report in s3 object {uri}, " + identifier);
 
                 try
                 {
                     S3Object s3Object = await _client.GetS3Object(s3SourceInfo);
 
-                    _logger.LogDebug($"Successfully retrieved report in s3 object {uri}, " + identifier);
+                    _logger.LogInformation($"Successfully retrieved report in s3 object {uri}, " + identifier);
 
                     if (s3Object.Content.Length / 1024 > _config.MaxS3ObjectSizeKilobytes)
                     {
@@ -75,15 +76,19 @@ namespace MailCheck.TlsRpt.Reports.Processor
 
                     TlsRptEmail tlsRptEmail = _emailBodyParser.Parse(s3Object.Content);
 
+                    if (_ignoredSubmitters.Contains(tlsRptEmail.TlsReportSubmitter))
+                    { 
+                        _logger.LogInformation($"Ignoring s3 object {uri} submitted by {tlsRptEmail.TlsReportSubmitter} " + identifier);
+                        return;
+                    }
+
                     ReportInfo reportInfo = _reportParser.Parse(tlsRptEmail, uri);
 
                     if (reportInfo.Report != null)
                     {
-                        _logger.LogDebug($"Successfully parsed report in s3 object {uri}, " + identifier);
-
+                        _logger.LogInformation($"Successfully parsed report in s3 object {uri}, " + identifier);
                         await _dao.Persist(reportInfo);
-
-                        _logger.LogDebug($"Successfully persisted report in s3 object {uri}, " + identifier);
+                        _logger.LogInformation($"Successfully persisted report in s3 object {uri}, " + identifier);
                     }
                     else
                     {

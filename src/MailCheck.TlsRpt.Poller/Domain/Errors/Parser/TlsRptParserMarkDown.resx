@@ -123,16 +123,11 @@
 It's most likely that mailto or https has a spelling mistake, please investigate.</value>
   </data>
   <data name="MalformedUriError" xml:space="preserve">
-    <value>TLS aggregate reports can be delivered using either email or HTTPS.
+    <value>There is an issue with your TLS-RPT record. Your TLS-RPT record should be of the form:
 
-Email example:
-_smtp._tls.example.com. IN TXT \
-"v=TLSRPTv1;rua=reports@example.com"
-      
-HTTPS example:
-_smtp._tls.example.com. IN TXT \
-"v=TLSRPTv1; \
-rua=https://reporting.example.com/v1/tlsrpt"
+v=TLSRPTv1;rua=mailto:tls-rua@mailcheck.service.ncsc.gov.uk
+
+where tls-rua@mailcheck.service.ncsc.gov.uk is the address you would like to send TLS-RPT reports, which in this example is Mail Check.
     </value>
   </data>
 </root>

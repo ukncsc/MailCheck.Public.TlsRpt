@@ -45,6 +45,8 @@ namespace MailCheck.TlsRpt.Reports.Api.Dao
                 settings = MongoClientSettings.FromUrl(new MongoUrl($"mongodb://{username}:{password}@{_config.ClusterEndpoint}/"));
                 settings.AllowInsecureTls = true;
                 settings.UseTls = true;
+                settings.ReadPreference = ReadPreference.SecondaryPreferred;
+                settings.ReplicaSetName = "rs0";
             }
             else
             {

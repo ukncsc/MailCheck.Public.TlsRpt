@@ -8,6 +8,7 @@ using MailCheck.Common.Util;
 using MailCheck.TlsRpt.Poller.Domain;
 using MailCheck.TlsRpt.Poller.Domain.Errors.Parser;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace MailCheck.TlsRpt.Poller.Dns
 {
@@ -19,7 +20,7 @@ namespace MailCheck.TlsRpt.Poller.Dns
     public class DnsClient : IDnsClient
     {
         private const string NonExistentDomainError = "Non-Existent Domain";
-        private const string SERV_FAILURE_ERROR = "Server Failure";
+        private const string ServerFailureError = "Server Failure";
         private readonly ILookupClient _lookupClient;
         private readonly ILogger<DnsClient> _log;
 
@@ -34,7 +35,6 @@ namespace MailCheck.TlsRpt.Poller.Dns
         {
             string queryText = $"_smtp._tls.{domain}";
             QueryType queryType = QueryType.TXT;
-
             IDnsQueryResponse response = await _lookupClient.QueryAsync(queryText, queryType);
 
             List<TlsRptRecordInfo> tlsRptRecordInfos = response.Answers.OfType<TxtRecord>()
@@ -42,12 +42,12 @@ namespace MailCheck.TlsRpt.Poller.Dns
                 .Select(_ => new TlsRptRecordInfo(domain, _.Text.Select(r => r.Escape()).ToList()))
                 .ToList();
 
-            if (response.HasError && response.ErrorMessage != NonExistentDomainError && response.ErrorMessage != SERV_FAILURE_ERROR)
+            if (response.HasError && response.ErrorMessage != NonExistentDomainError  && response.ErrorMessage != ServerFailureError)
             {
-                return new TlsRptRecordInfos(domain, new FailedPollError(response.ErrorMessage) , response.MessageSize, response.NameServer.ToString(), response.AuditTrail);
+                return new TlsRptRecordInfos(domain, new FailedPollError(response.ErrorMessage), response.MessageSize, response.NameServer.Address.ToString(), response.AuditTrail);
             }
 
-            return new TlsRptRecordInfos(domain, tlsRptRecordInfos, response.MessageSize);
+            return new TlsRptRecordInfos(domain, tlsRptRecordInfos, response.MessageSize, response.NameServer.Address.ToString());
         }
     }
 }

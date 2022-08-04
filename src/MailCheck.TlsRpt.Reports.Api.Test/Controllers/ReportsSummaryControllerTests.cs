@@ -5,6 +5,7 @@ using FakeItEasy;
 using MailCheck.Common.Api.Domain;
 using MailCheck.TlsRpt.Reports.Api.Controllers;
 using MailCheck.TlsRpt.Reports.Api.Dao;
+using MailCheck.TlsRpt.Reports.Api.Domain;
 using MailCheck.TlsRpt.Reports.Api.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

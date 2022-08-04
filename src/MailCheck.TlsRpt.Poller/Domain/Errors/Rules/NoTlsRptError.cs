@@ -7,7 +7,7 @@ namespace MailCheck.TlsRpt.Poller.Domain.Errors.Rules
         private static readonly Guid _Id = Guid.Parse("8ec28d23-67b4-4e62-aca4-094eae3ebeae");
 
         public NoTlsRptError(string domain)
-            : base(_Id, ErrorType.Info, TlsRptRuleErrorMessages.NoTlsRptError, FormatMarkDown(domain))
+            : base(_Id, "mailcheck.tlsrpt.noTlsRpt", ErrorType.Warning, TlsRptRuleErrorMessages.NoTlsRptError, FormatMarkDown(domain))
         {
         }
 

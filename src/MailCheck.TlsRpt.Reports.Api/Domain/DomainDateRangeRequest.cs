@@ -1,4 +1,4 @@
-﻿namespace MailCheck.TlsRpt.Reports.Api.Controllers
+﻿namespace MailCheck.TlsRpt.Reports.Api.Domain
 {
     public class DomainDateRangeRequest
     {
