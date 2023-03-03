@@ -21,7 +21,7 @@
       <PackageReference Include="Serilog.Extensions.Logging" Version="2.1.0-dev-10193" />
       <PackageReference Include="Serilog.Sinks.Console" Version="3.1.2-dev-00788" />
       <PackageReference Include="MongoDB.Bson" Version="2.11.4" />
-      <PackageReference Include="MongoDB.Driver" Version="2.11.4" />
+      <PackageReference Include="MongoDB.Driver" Version="2.19.0" />
       <PackageReference Include="Newtonsoft.Json.Bson" Version="1.0.2" />
       <PackageReference Include="WebApiContrib.Core.Formatter.Csv" Version="3.0.2" />
       <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.17" />
